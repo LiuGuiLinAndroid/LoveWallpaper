@@ -10,4 +10,6 @@ package com.liuguilin.lovewallpaper.entity;
 
 public class Constants {
 
+    //第一次启动
+    public static final int HANDLER_FIRST_START = 1000;
 }
