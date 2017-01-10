@@ -11,11 +11,23 @@ package com.liuguilin.lovewallpaper.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
+import com.kymjs.rxvolley.RxVolley;
+import com.kymjs.rxvolley.client.HttpCallback;
+import com.kymjs.rxvolley.http.VolleyError;
 import com.liuguilin.lovewallpaper.R;
+import com.liuguilin.lovewallpaper.adapter.SpecialGridAdapter;
+import com.liuguilin.lovewallpaper.model.SpecialApiModel;
+import com.liuguilin.lovewallpaper.model.SpecialGridModel;
 import com.liuguilin.lovewallpaper.utils.GlideUtils;
+import com.liuguilin.lovewallpaper.utils.L;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class SpecialActivity extends BaseActivity {
 
@@ -25,6 +37,10 @@ public class SpecialActivity extends BaseActivity {
     private String url;
     private ImageView iv_icon;
     private TextView tv_desc;
+    private GridView mGridView;
+
+    private SpecialGridAdapter mSpecialGridAdapter;
+    private List<SpecialGridModel> mList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +54,7 @@ public class SpecialActivity extends BaseActivity {
 
         iv_icon = (ImageView) findViewById(R.id.iv_icon);
         tv_desc = (TextView) findViewById(R.id.tv_desc);
+        mGridView = (GridView) findViewById(R.id.mGridView);
 
         Intent intent = getIntent();
         name = intent.getStringExtra("name");
@@ -59,5 +76,36 @@ public class SpecialActivity extends BaseActivity {
         if (!TextUtils.isEmpty(icon)) {
             GlideUtils.loadImageCrop(this, icon, iv_icon);
         }
+
+        if (!TextUtils.isEmpty(url)) {
+            RxVolley.get(url, new HttpCallback() {
+                @Override
+                public void onSuccess(String t) {
+                    parsingJson(t);
+                }
+
+                @Override
+                public void onFailure(VolleyError error) {
+                    L.i(error.toString());
+                }
+            });
+        }
+    }
+
+    //解析
+    private void parsingJson(String t) {
+        Gson gson = new Gson();
+        SpecialApiModel model = gson.fromJson(t, SpecialApiModel.class);
+        for (int i = 0; i < model.getData().size(); i++) {
+            SpecialGridModel models = new SpecialGridModel();
+            models.setKey(model.getData().get(i).getKey());
+            models.setBig(model.getData().get(i).getBig());
+            models.setDown(model.getData().get(i).getDown());
+            models.setDown_stat(model.getData().get(i).getDown_stat());
+            models.setSmall(model.getData().get(i).getSmall());
+            mList.add(models);
+        }
+        mSpecialGridAdapter = new SpecialGridAdapter(this,mList);
+        mGridView.setAdapter(mSpecialGridAdapter);
     }
 }
