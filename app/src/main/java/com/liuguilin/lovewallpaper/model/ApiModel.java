@@ -9,6 +9,7 @@ package com.liuguilin.lovewallpaper.model;
  */
 
 public class ApiModel {
+
     //排名
     private String ranking;
     //横幅
@@ -17,6 +18,8 @@ public class ApiModel {
     private String wallpaper;
     //推荐
     private String recommend;
+    //分类
+    private String category;
 
     public String getRanking() {
         return ranking;
@@ -50,6 +53,14 @@ public class ApiModel {
         this.recommend = recommend;
     }
 
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
+
     @Override
     public String toString() {
         return "ApiModel{" +
@@ -57,6 +68,7 @@ public class ApiModel {
                 ", banner='" + banner + '\'' +
                 ", wallpaper='" + wallpaper + '\'' +
                 ", recommend='" + recommend + '\'' +
+                ", category='" + category + '\'' +
                 '}';
     }
 }

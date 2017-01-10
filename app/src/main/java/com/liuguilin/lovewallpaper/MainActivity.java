@@ -107,6 +107,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     //首页
     private void initHomePager() {
+        getSupportActionBar().setTitle(getString(R.string.app_name));
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         if (homePageFragment == null) {
             homePageFragment = new HomePageFragment();
@@ -121,6 +122,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     //分类
     private void initCategory() {
+        getSupportActionBar().setTitle(getString(R.string.text_category));
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         if (categoryFragment == null) {
             categoryFragment = new CategoryFragment();
@@ -135,6 +137,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     //排名
     private void initRanking() {
+        getSupportActionBar().setTitle(getString(R.string.text_ranking));
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         if (rankingFragment == null) {
             rankingFragment = new RankingFragment();
@@ -149,6 +152,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     //壁纸
     private void initWallpaper() {
+        getSupportActionBar().setTitle(getString(R.string.text_wallpaper));
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         if (wallpaperFragment == null) {
             wallpaperFragment = new WallpaperFragment();
@@ -163,6 +167,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     //推荐
     private void initRecommend() {
+        getSupportActionBar().setTitle(getString(R.string.text_recommend));
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         if (recommendFragment == null) {
             recommendFragment = new RecommendFragment();

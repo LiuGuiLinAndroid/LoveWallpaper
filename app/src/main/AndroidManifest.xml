@@ -28,6 +28,7 @@
 
         <activity android:name=".activity.SettingActivity"/>
         <activity android:name=".activity.SpecialActivity"/>
+        <activity android:name=".activity.CategoryActivity"/>
 
     </application>
 
