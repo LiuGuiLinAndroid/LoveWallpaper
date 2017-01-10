@@ -84,11 +84,10 @@ public class HomePageFragment extends Fragment {
             public void onResponse(Call<WallpaperApiModel> call, Response<WallpaperApiModel> response) {
                 L.i("Retrofit onResponse");
                 if (response.isSuccessful()) {
-                    ApiModel model = new ApiModel();
-                    model.setRanking(response.body().getRanking());
-                    model.setBanner(response.body().getBanner());
-                    model.setWallpaper(response.body().getWallpaper());
-                    model.setRecommend(response.body().getRecommend());
+                    ApiModel.ranking = response.body().getRanking();
+                    ApiModel.banner = response.body().getBanner();
+                    ApiModel.wallpaper = response.body().getWallpaper();
+                    ApiModel.recommend = response.body().getRecommend();
                     parsingBanner(response.body().getSpecial());
                     parsingEveryDay(response.body().getEveryday());
                 }

@@ -10,17 +10,69 @@ package com.liuguilin.lovewallpaper.fragment;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.GridView;
 
+import com.google.gson.Gson;
+import com.kymjs.rxvolley.RxVolley;
+import com.kymjs.rxvolley.client.HttpCallback;
+import com.kymjs.rxvolley.http.VolleyError;
 import com.liuguilin.lovewallpaper.R;
+import com.liuguilin.lovewallpaper.adapter.SpecialGridAdapter;
+import com.liuguilin.lovewallpaper.model.ApiModel;
+import com.liuguilin.lovewallpaper.model.SpecialApiModel;
+import com.liuguilin.lovewallpaper.model.SpecialGridModel;
 
-public class RankingFragment extends Fragment{
+import java.util.ArrayList;
+import java.util.List;
+
+public class RankingFragment extends Fragment {
+
+    private GridView mGridView;
+    private SpecialGridAdapter mSpecialGridAdapter;
+    private List<SpecialGridModel> mList = new ArrayList<>();
 
     @Override
-    public View onCreateView(LayoutInflater inflater,  ViewGroup container,  Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_ranking,container,false);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_ranking, container, false);
+        initView(view);
         return view;
+    }
+
+    private void initView(View view) {
+        mGridView = (GridView) view.findViewById(R.id.mGridView);
+
+        if (!TextUtils.isEmpty(ApiModel.ranking)) {
+            RxVolley.get(ApiModel.ranking, new HttpCallback() {
+                @Override
+                public void onSuccess(String t) {
+                    parsingJson(t);
+                }
+
+                @Override
+                public void onFailure(VolleyError error) {
+                    super.onFailure(error);
+                }
+            });
+        }
+    }
+
+    private void parsingJson(String t) {
+        Gson gson = new Gson();
+        SpecialApiModel model = gson.fromJson(t, SpecialApiModel.class);
+        for (int i = 0; i < model.getData().size(); i++) {
+            SpecialGridModel models = new SpecialGridModel();
+            models.setKey(model.getData().get(i).getKey());
+            models.setBig(model.getData().get(i).getBig());
+            models.setDown(model.getData().get(i).getDown());
+            models.setDown_stat(model.getData().get(i).getDown_stat());
+            models.setSmall(model.getData().get(i).getSmall());
+            mList.add(models);
+        }
+        mSpecialGridAdapter = new SpecialGridAdapter(getActivity(), mList);
+        mGridView.setAdapter(mSpecialGridAdapter);
     }
 }

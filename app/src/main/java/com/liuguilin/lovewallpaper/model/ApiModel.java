@@ -11,64 +11,12 @@ package com.liuguilin.lovewallpaper.model;
 public class ApiModel {
 
     //排名
-    private String ranking;
+    public static String ranking;
     //横幅
-    private String banner;
+    public static String banner;
     //壁纸
-    private String wallpaper;
+    public static String wallpaper;
     //推荐
-    private String recommend;
-    //分类
-    private String category;
+    public static String recommend;
 
-    public String getRanking() {
-        return ranking;
-    }
-
-    public void setRanking(String ranking) {
-        this.ranking = ranking;
-    }
-
-    public String getBanner() {
-        return banner;
-    }
-
-    public void setBanner(String banner) {
-        this.banner = banner;
-    }
-
-    public String getWallpaper() {
-        return wallpaper;
-    }
-
-    public void setWallpaper(String wallpaper) {
-        this.wallpaper = wallpaper;
-    }
-
-    public String getRecommend() {
-        return recommend;
-    }
-
-    public void setRecommend(String recommend) {
-        this.recommend = recommend;
-    }
-
-    public String getCategory() {
-        return category;
-    }
-
-    public void setCategory(String category) {
-        this.category = category;
-    }
-
-    @Override
-    public String toString() {
-        return "ApiModel{" +
-                "ranking='" + ranking + '\'' +
-                ", banner='" + banner + '\'' +
-                ", wallpaper='" + wallpaper + '\'' +
-                ", recommend='" + recommend + '\'' +
-                ", category='" + category + '\'' +
-                '}';
-    }
 }
