@@ -80,7 +80,7 @@ public class CategoryActivity extends BaseActivity {
 
             @Override
             public void onScroll(AbsListView absListView, int i, int i1, int i2) {
-                //lastItem = i + i1 - 1;
+
             }
         });
     }
