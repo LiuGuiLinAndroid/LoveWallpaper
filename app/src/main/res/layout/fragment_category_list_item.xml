@@ -33,7 +33,6 @@
                 android:gravity="right"
                 android:text="影视"
                 android:textAllCaps="false"
-                android:textColor="@color/colorBlack"
                 android:textSize="30sp"
                 android:textStyle="italic"/>
         </RelativeLayout>
