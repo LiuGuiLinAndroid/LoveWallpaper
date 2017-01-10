@@ -1,5 +1,6 @@
 package com.liuguilin.lovewallpaper;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentTransaction;
@@ -14,9 +15,11 @@ import android.widget.Toast;
 
 import com.liuguilin.lovewallpaper.fragment.CategoryFragment;
 import com.liuguilin.lovewallpaper.fragment.HomePageFragment;
+import com.liuguilin.lovewallpaper.fragment.NewsFragment;
 import com.liuguilin.lovewallpaper.fragment.RankingFragment;
 import com.liuguilin.lovewallpaper.fragment.RecommendFragment;
 import com.liuguilin.lovewallpaper.fragment.WallpaperFragment;
+import com.liuguilin.lovewallpaper.fragment.WeatherFragment;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -27,6 +30,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private RankingFragment rankingFragment;
     private WallpaperFragment wallpaperFragment;
     private RecommendFragment recommendFragment;
+    private NewsFragment newsFragment;
+    private WeatherFragment weatherFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +41,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         initView();
     }
 
+    @SuppressLint("NewApi")
     private void initView() {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -69,6 +75,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 break;
             case R.id.nav_recommend:
                 initRecommend();
+                break;
+            case R.id.nav_weather:
+                initWeather();
+                break;
+            case R.id.nav_news:
+                initNews();
                 break;
             case R.id.nav_share:
                 Toast.makeText(this, "Share App", Toast.LENGTH_SHORT).show();
@@ -177,6 +189,36 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         hideFragment(transaction);
         //显示需要显示的fragment
         transaction.show(recommendFragment);
+        transaction.commit();
+    }
+
+    //天气
+    private void initWeather() {
+        getSupportActionBar().setTitle(getString(R.string.text_weather));
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        if (weatherFragment == null) {
+            weatherFragment = new WeatherFragment();
+            transaction.add(R.id.main_frame_layout, weatherFragment);
+        }
+        //隐藏所有fragment
+        hideFragment(transaction);
+        //显示需要显示的fragment
+        transaction.show(weatherFragment);
+        transaction.commit();
+    }
+
+    //新闻
+    private void initNews() {
+        getSupportActionBar().setTitle(getString(R.string.text_news));
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        if (newsFragment == null) {
+            newsFragment = new NewsFragment();
+            transaction.add(R.id.main_frame_layout, newsFragment);
+        }
+        //隐藏所有fragment
+        hideFragment(transaction);
+        //显示需要显示的fragment
+        transaction.show(newsFragment);
         transaction.commit();
     }
 

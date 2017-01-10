@@ -7,4 +7,6 @@
     <string name="text_recommend">推荐</string>
     <string name="text_share">分享</string>
     <string name="text_setting">设置</string>
+    <string name="text_weather">天气</string>
+    <string name="text_news">新闻</string>
 </resources>

@@ -48,7 +48,6 @@ public class CategoryFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_category, container, false);
         initView(view);
         return view;
-
     }
 
     private void initView(View view) {
