@@ -9,14 +9,29 @@ package com.liuguilin.lovewallpaper.fragment;
  */
 
 import android.os.Bundle;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.liuguilin.lovewallpaper.R;
+import com.liuguilin.lovewallpaper.entity.Constants;
 
-public class NewsFragment extends Fragment{
+import java.util.ArrayList;
+import java.util.List;
+
+
+public class NewsFragment extends Fragment {
+
+    //TabLayout
+    private TabLayout mTabLayout;
+    //ViewPager
+    private ViewPager mViewPager;
+    //Fragment
+    private List<Fragment> mFragment = new ArrayList<>();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -27,5 +42,67 @@ public class NewsFragment extends Fragment{
 
     private void initView(View view) {
 
+        mTabLayout = (TabLayout) view.findViewById(R.id.mTabLayout);
+        //设置模式
+        mTabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
+        mViewPager = (ViewPager) view.findViewById(R.id.mViewPager);
+
+        //test
+        mFragment.add(new NewsPageFragment());
+        mFragment.add(new NewsPageFragment());
+        mFragment.add(new NewsPageFragment());
+        mFragment.add(new NewsPageFragment());
+        mFragment.add(new NewsPageFragment());
+        mFragment.add(new NewsPageFragment());
+        mFragment.add(new NewsPageFragment());
+        mFragment.add(new NewsPageFragment());
+        mFragment.add(new NewsPageFragment());
+        mFragment.add(new NewsPageFragment());
+        //预加载
+        mViewPager.setOffscreenPageLimit(mFragment.size());
+        mTabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                switch (tab.getPosition()) {
+                    case 0:
+
+                        break;
+                    case 1:
+
+                        break;
+                }
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+            }
+        });
+
+        mViewPager.setAdapter(new FragmentPagerAdapter(getFragmentManager()) {
+            //选中的item
+            @Override
+            public Fragment getItem(int position) {
+                return mFragment.get(position);
+            }
+
+            //返回item的个数
+            @Override
+            public int getCount() {
+                return mFragment.size();
+            }
+
+            //设置标题
+            @Override
+            public CharSequence getPageTitle(int position) {
+                return Constants.NEWS_TYPE_ZH[position];
+            }
+        });
+
+        //绑定
+        mTabLayout.setupWithViewPager(mViewPager);
     }
 }

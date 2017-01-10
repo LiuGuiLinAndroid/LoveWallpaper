@@ -25,6 +25,7 @@ import android.widget.TextView;
 import com.liuguilin.lovewallpaper.R;
 import com.liuguilin.lovewallpaper.activity.SpecialActivity;
 import com.liuguilin.lovewallpaper.adapter.MainGridAdapter;
+import com.liuguilin.lovewallpaper.entity.Constants;
 import com.liuguilin.lovewallpaper.imp.ApiImp;
 import com.liuguilin.lovewallpaper.model.ApiModel;
 import com.liuguilin.lovewallpaper.model.MainGridModel;
@@ -74,7 +75,7 @@ public class HomePageFragment extends Fragment {
             }
         });
 
-        Retrofit retrofit = new Retrofit.Builder().baseUrl("http://open.lovebizhi.com/")
+        Retrofit retrofit = new Retrofit.Builder().baseUrl(Constants.WALLPAPER_BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create()).build();
         apiImp = retrofit.create(ApiImp.class);
         Call<WallpaperApiModel> call = apiImp.getWallpaperApi();

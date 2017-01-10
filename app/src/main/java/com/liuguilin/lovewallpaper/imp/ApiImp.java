@@ -9,13 +9,24 @@ package com.liuguilin.lovewallpaper.imp;
  */
 
 import com.liuguilin.lovewallpaper.model.WallpaperApiModel;
+import com.liuguilin.lovewallpaper.model.WeatherApiModel;
+import com.liuguilin.lovewallpaper.model.WeatherEveryDayApiModel;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
+import retrofit2.http.Query;
 
 public interface ApiImp {
 
     //获取爱壁纸接口
     @GET("baidu_rom.php")
-    Call<WallpaperApiModel>getWallpaperApi();
+    Call<WallpaperApiModel> getWallpaperApi();
+
+    //获取心知天气
+    @GET("v3/weather/now.json?")
+    Call<WeatherApiModel> getWeatherApi(@Query("key") String key, @Query("location") String city);
+
+    //获取未来三天的天气
+    @GET("v3/weather/daily.json?")
+    Call<WeatherEveryDayApiModel>getWeatherEveryDayApi(@Query("key") String key, @Query("location") String city);
 }

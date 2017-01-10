@@ -239,6 +239,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         if (recommendFragment != null) {
             transaction.hide(recommendFragment);
         }
+        if(newsFragment != null){
+            transaction.hide(newsFragment);
+        }
+        if(weatherFragment != null){
+            transaction.hide(weatherFragment);
+        }
 
     }
 }
