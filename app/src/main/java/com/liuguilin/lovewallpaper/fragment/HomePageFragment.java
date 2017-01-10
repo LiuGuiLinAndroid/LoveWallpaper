@@ -16,6 +16,7 @@ import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -47,6 +48,8 @@ public class HomePageFragment extends Fragment {
     private GridView mGridView;
     private List<View> mView = new ArrayList<>();
     private List<MainGridModel> mList = new ArrayList<>();
+    private List<String> mListUrl = new ArrayList<>();
+    private List<String> mListTitle = new ArrayList<>();
     private MainGridAdapter mainGridAdapter;
 
     @Override
@@ -60,6 +63,16 @@ public class HomePageFragment extends Fragment {
 
         mViewPager = (ViewPager) view.findViewById(R.id.mViewPager);
         mGridView = (GridView) view.findViewById(R.id.mGridView);
+
+        mGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Intent intent = new Intent(getActivity(),SpecialActivity.class);
+                intent.putExtra("url",mListUrl.get(i));
+                intent.putExtra("name",mListTitle.get(i));
+                startActivity(intent);
+            }
+        });
 
         Retrofit retrofit = new Retrofit.Builder().baseUrl("http://open.lovebizhi.com/")
                 .addConverterFactory(GsonConverterFactory.create()).build();
@@ -94,6 +107,8 @@ public class HomePageFragment extends Fragment {
             MainGridModel model = new MainGridModel();
             model.setTime(everyday.get(i).getDate());
             model.setUrl(everyday.get(i).getImage());
+            mListUrl.add(everyday.get(i).getUrl());
+            mListTitle.add(everyday.get(i).getDate());
             mList.add(model);
         }
         mainGridAdapter = new MainGridAdapter(getActivity(), mList);

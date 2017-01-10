@@ -11,8 +11,10 @@ package com.liuguilin.lovewallpaper.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.View;
 import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
@@ -39,6 +41,8 @@ public class SpecialActivity extends BaseActivity {
     private TextView tv_desc;
     private GridView mGridView;
 
+    private LinearLayout ll_special_title;
+
     private SpecialGridAdapter mSpecialGridAdapter;
     private List<SpecialGridModel> mList = new ArrayList<>();
 
@@ -55,6 +59,7 @@ public class SpecialActivity extends BaseActivity {
         iv_icon = (ImageView) findViewById(R.id.iv_icon);
         tv_desc = (TextView) findViewById(R.id.tv_desc);
         mGridView = (GridView) findViewById(R.id.mGridView);
+        ll_special_title = (LinearLayout) findViewById(R.id.ll_special_title);
 
         Intent intent = getIntent();
         name = intent.getStringExtra("name");
@@ -69,8 +74,7 @@ public class SpecialActivity extends BaseActivity {
 
         if (!TextUtils.isEmpty(desc)) {
             tv_desc.setText(desc);
-        } else {
-            tv_desc.setText("加载失败!");
+            ll_special_title.setVisibility(View.VISIBLE);
         }
 
         if (!TextUtils.isEmpty(icon)) {
@@ -105,7 +109,7 @@ public class SpecialActivity extends BaseActivity {
             models.setSmall(model.getData().get(i).getSmall());
             mList.add(models);
         }
-        mSpecialGridAdapter = new SpecialGridAdapter(this,mList);
+        mSpecialGridAdapter = new SpecialGridAdapter(this, mList);
         mGridView.setAdapter(mSpecialGridAdapter);
     }
 }
