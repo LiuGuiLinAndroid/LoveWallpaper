@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">LoveWallpaper</string>
+    <string name="text_home_page">首页</string>
+    <string name="text_category">分类</string>
+    <string name="text_ranking">排名</string>
+    <string name="text_wallpaper">壁纸</string>
+    <string name="text_recommend">推荐</string>
+    <string name="text_share">分享</string>
+    <string name="text_setting">设置</string>
 </resources>

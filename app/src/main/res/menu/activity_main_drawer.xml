@@ -3,40 +3,40 @@
 
     <group android:checkableBehavior="single">
         <item
-            android:checked="true"
             android:id="@+id/nav_home_page"
+            android:checked="true"
             android:icon="@drawable/ic_menu_camera"
-            android:title="首页"/>
+            android:title="@string/text_home_page"/>
         <item
             android:id="@+id/nav_category"
             android:icon="@drawable/ic_menu_gallery"
-            android:title="分类"/>
+            android:title="@string/text_category"/>
         <item
             android:id="@+id/nav_ranking"
             android:icon="@drawable/ic_menu_slideshow"
-            android:title="排名"/>
+            android:title="@string/text_ranking"/>
         <item
             android:id="@+id/nav_wallpaper"
             android:icon="@drawable/ic_menu_manage"
-            android:title="壁纸"/>
+            android:title="@string/text_wallpaper"/>
 
         <item
             android:id="@+id/nav_recommend"
             android:icon="@drawable/ic_menu_manage"
-            android:title="推荐"/>
+            android:title="@string/text_recommend"/>
 
     </group>
 
-    <item android:title="Communicate">
+    <item android:title="@string/app_name">
         <menu>
             <item
                 android:id="@+id/nav_share"
                 android:icon="@drawable/ic_menu_share"
-                android:title="分享"/>
+                android:title="@string/text_share"/>
             <item
                 android:id="@+id/nav_setting"
                 android:icon="@drawable/ic_menu_send"
-                android:title="设置"/>
+                android:title="@string/text_setting"/>
         </menu>
     </item>
 
