@@ -28,7 +28,9 @@
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar"/>
 
-        <activity android:name=".activity.SettingActivity"/>
+        <activity
+            android:name=".activity.SettingActivity"
+            android:label="@string/text_setting"/>
         <activity android:name=".activity.SpecialActivity"/>
         <activity android:name=".activity.CategoryActivity"/>
 

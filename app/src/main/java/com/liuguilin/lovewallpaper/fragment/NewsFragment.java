@@ -43,8 +43,6 @@ public class NewsFragment extends Fragment {
     private void initView(View view) {
 
         mTabLayout = (TabLayout) view.findViewById(R.id.mTabLayout);
-        //设置模式
-        mTabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
         mViewPager = (ViewPager) view.findViewById(R.id.mViewPager);
 
         //test
@@ -58,27 +56,21 @@ public class NewsFragment extends Fragment {
         mFragment.add(new NewsPageFragment());
         mFragment.add(new NewsPageFragment());
         mFragment.add(new NewsPageFragment());
-        //预加载
-        mViewPager.setOffscreenPageLimit(mFragment.size());
-        mTabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+
+        mTabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
-                switch (tab.getPosition()) {
-                    case 0:
 
-                        break;
-                    case 1:
-
-                        break;
-                }
             }
 
             @Override
             public void onTabUnselected(TabLayout.Tab tab) {
+
             }
 
             @Override
             public void onTabReselected(TabLayout.Tab tab) {
+                mTabLayout.setScrollPosition(tab.getPosition(), 1f, true);
             }
         });
 
@@ -92,7 +84,7 @@ public class NewsFragment extends Fragment {
             //返回item的个数
             @Override
             public int getCount() {
-                return mFragment.size();
+                return Constants.NEWS_TYPE_ZH.length;
             }
 
             //设置标题

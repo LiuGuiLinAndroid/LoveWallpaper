@@ -8,12 +8,20 @@ package com.liuguilin.lovewallpaper.entity;
  *  描述：    常量类
  */
 
+import android.content.Context;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.view.Gravity;
+
 import com.liuguilin.lovewallpaper.R;
+import com.liuguilin.lovewallpaper.view.CustomDialog;
 
 public class Constants {
 
     //第一次启动
     public static final int HANDLER_FIRST_START = 1000;
+    //无限轮播
+    public static final int HANDLER_AUTO_SHUFFLING = 1001;
 
     public static final String WALLPAPER_BASE_URL = "http://open.lovebizhi.com/";
     public static final String WEATHER_BASE_URL = "https://api.thinkpage.cn/";
@@ -34,4 +42,25 @@ public class Constants {
     //新闻类别
     public static final String NEWS_TYPE_EN[] = {"top", "shehui", "guonei", "guoji", "yule", "tiyu", "junshi", "keji", "caijing", "shishang"};
     public static final String NEWS_TYPE_ZH[] = {"头条", "社会", "国内", "国际", "娱乐", "体育", "军事", "科技", "财经", "时尚"};
+
+    //封装dialog
+    public static CustomDialog showDialog(Context mContext, int layout) {
+        //初始化提示框
+        CustomDialog dialog = new CustomDialog(mContext, 0, 0, layout, R.style.Theme_dialog, Gravity.CENTER, R.style.pop_anim_style);
+        return dialog;
+    }
+
+    //获取版本号
+    public static String getAppVersion(Context mContext) {
+        String version = "";
+        PackageManager pm = mContext.getPackageManager();
+        try {
+            PackageInfo info = pm.getPackageInfo(mContext.getPackageName(), 0);
+            version = info.versionName;
+            return version;
+        } catch (PackageManager.NameNotFoundException e) {
+            version = "获取失败";
+        }
+        return version;
+    }
 }

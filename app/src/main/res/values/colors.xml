@@ -6,5 +6,7 @@
 
     <color name="colorWhite">@android:color/white</color>
     <color name="colorBlack">@android:color/black</color>
+    <color name="colorShareBg">#242131</color>
+
 
 </resources>

@@ -1,6 +1,7 @@
 package com.liuguilin.lovewallpaper;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentTransaction;
@@ -9,10 +10,11 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
 
+import com.liuguilin.lovewallpaper.activity.SettingActivity;
 import com.liuguilin.lovewallpaper.fragment.CategoryFragment;
 import com.liuguilin.lovewallpaper.fragment.HomePageFragment;
 import com.liuguilin.lovewallpaper.fragment.NewsFragment;
@@ -20,6 +22,7 @@ import com.liuguilin.lovewallpaper.fragment.RankingFragment;
 import com.liuguilin.lovewallpaper.fragment.RecommendFragment;
 import com.liuguilin.lovewallpaper.fragment.WallpaperFragment;
 import com.liuguilin.lovewallpaper.fragment.WeatherFragment;
+import com.liuguilin.lovewallpaper.view.CustomDialog;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -33,6 +36,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private NewsFragment newsFragment;
     private WeatherFragment weatherFragment;
 
+    private CustomDialog dialogShare;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,6 +48,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     @SuppressLint("NewApi")
     private void initView() {
+
+        dialogShare = new CustomDialog(this, 0, 0, R.layout.dialog_share_item, R.style.Theme_dialog, Gravity.BOTTOM, R.style.pop_anim_style);
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -83,10 +91,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 initNews();
                 break;
             case R.id.nav_share:
-                Toast.makeText(this, "Share App", Toast.LENGTH_SHORT).show();
+                drawer.closeDrawer(GravityCompat.START);
+                dialogShare.show();
                 break;
             case R.id.nav_setting:
-                Toast.makeText(this, "Setting App", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(this, SettingActivity.class));
                 break;
         }
         drawer.closeDrawer(GravityCompat.START);
@@ -239,10 +248,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         if (recommendFragment != null) {
             transaction.hide(recommendFragment);
         }
-        if(newsFragment != null){
+        if (newsFragment != null) {
             transaction.hide(newsFragment);
         }
-        if(weatherFragment != null){
+        if (weatherFragment != null) {
             transaction.hide(weatherFragment);
         }
 

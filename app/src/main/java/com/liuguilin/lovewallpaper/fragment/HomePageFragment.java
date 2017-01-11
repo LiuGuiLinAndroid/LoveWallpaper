@@ -10,6 +10,8 @@ package com.liuguilin.lovewallpaper.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -53,6 +55,26 @@ public class HomePageFragment extends Fragment {
     private List<String> mListTitle = new ArrayList<>();
     private MainGridAdapter mainGridAdapter;
 
+
+    //轮播
+    public Handler mHandler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            switch (msg.what) {
+                case Constants.HANDLER_AUTO_SHUFFLING:
+                    int index = mViewPager.getCurrentItem();
+                    if (index >= mListTitle.size()) {
+                        mViewPager.setCurrentItem(1);
+                    }else {
+                        mViewPager.setCurrentItem(index + 1);
+                    }
+                    mHandler.sendEmptyMessageDelayed(Constants.HANDLER_AUTO_SHUFFLING, 3000);
+                    break;
+            }
+        }
+    };
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home_page, container, false);
@@ -68,9 +90,9 @@ public class HomePageFragment extends Fragment {
         mGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Intent intent = new Intent(getActivity(),SpecialActivity.class);
-                intent.putExtra("url",mListUrl.get(i));
-                intent.putExtra("name",mListTitle.get(i));
+                Intent intent = new Intent(getActivity(), SpecialActivity.class);
+                intent.putExtra("url", mListUrl.get(i));
+                intent.putExtra("name", mListTitle.get(i));
                 startActivity(intent);
             }
         });
@@ -83,7 +105,6 @@ public class HomePageFragment extends Fragment {
         call.enqueue(new Callback<WallpaperApiModel>() {
             @Override
             public void onResponse(Call<WallpaperApiModel> call, Response<WallpaperApiModel> response) {
-                L.i("Retrofit onResponse");
                 if (response.isSuccessful()) {
                     ApiModel.ranking = response.body().getRanking();
                     ApiModel.banner = response.body().getBanner();
@@ -142,6 +163,8 @@ public class HomePageFragment extends Fragment {
             mView.add(view);
         }
         mViewPager.setAdapter(new BannerAdapter());
+        mViewPager.setCurrentItem(mListTitle.size() * 100);
+        mHandler.sendEmptyMessageDelayed(Constants.HANDLER_AUTO_SHUFFLING, 3000);
     }
 
     private class BannerAdapter extends PagerAdapter {
