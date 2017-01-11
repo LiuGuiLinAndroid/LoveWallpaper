@@ -11,6 +11,7 @@ package com.liuguilin.lovewallpaper.imp;
 import com.liuguilin.lovewallpaper.model.WallpaperApiModel;
 import com.liuguilin.lovewallpaper.model.WeatherApiModel;
 import com.liuguilin.lovewallpaper.model.WeatherEveryDayApiModel;
+import com.liuguilin.lovewallpaper.model.WeatherLifeApiModel;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
@@ -28,5 +29,9 @@ public interface ApiImp {
 
     //获取未来三天的天气
     @GET("v3/weather/daily.json?")
-    Call<WeatherEveryDayApiModel>getWeatherEveryDayApi(@Query("key") String key, @Query("location") String city);
+    Call<WeatherEveryDayApiModel> getWeatherEveryDayApi(@Query("key") String key, @Query("location") String city);
+
+    //获取生活指数
+    @GET("v3/life/suggestion.json?")
+    Call<WeatherLifeApiModel> getWeatherLifeApi(@Query("key") String key, @Query("location") String city);
 }
