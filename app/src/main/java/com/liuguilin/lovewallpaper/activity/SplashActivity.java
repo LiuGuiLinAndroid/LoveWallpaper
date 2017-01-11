@@ -42,6 +42,6 @@ public class SplashActivity extends AppCompatActivity{
     }
 
     private void initView() {
-        mHandler.sendEmptyMessageDelayed(Constants.HANDLER_FIRST_START,3000);
+        mHandler.sendEmptyMessageDelayed(Constants.HANDLER_FIRST_START,2000);
     }
 }
