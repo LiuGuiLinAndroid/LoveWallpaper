@@ -14,9 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.liuguilin.lovewallpaper.R;
 import com.liuguilin.lovewallpaper.model.SpecialGridModel;
@@ -61,7 +59,6 @@ public class SpecialGridAdapter extends BaseAdapter {
             view = inflater.inflate(R.layout.activity_special_grid_item, null);
             viewHolder.iv_main_grid_icon = (ImageView) view.findViewById(R.id.iv_main_grid_icon);
             viewHolder.tv_main_grid_number = (TextView) view.findViewById(R.id.tv_main_grid_number);
-            viewHolder.ll_item_download = (LinearLayout) view.findViewById(R.id.ll_item_download);
             view.setTag(viewHolder);
         } else {
             viewHolder = (ViewHolder) view.getTag();
@@ -69,19 +66,12 @@ public class SpecialGridAdapter extends BaseAdapter {
         model = mList.get(i);
         GlideUtils.loadImageCrop(mContext, model.getSmall(), viewHolder.iv_main_grid_icon);
         viewHolder.tv_main_grid_number.setText(model.getDown() + "");
-        viewHolder.ll_item_download.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(mContext, "onClick:" + model.getDown(), Toast.LENGTH_SHORT).show();
-            }
-        });
         return view;
     }
 
     class ViewHolder {
         private ImageView iv_main_grid_icon;
         private TextView tv_main_grid_number;
-        private LinearLayout ll_item_download;
     }
 
 }

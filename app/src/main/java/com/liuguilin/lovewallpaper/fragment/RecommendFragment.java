@@ -8,6 +8,7 @@ package com.liuguilin.lovewallpaper.fragment;
  *  描述：    推荐
  */
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
@@ -15,6 +16,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
+import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.LinearLayout;
 
@@ -23,6 +25,7 @@ import com.kymjs.rxvolley.RxVolley;
 import com.kymjs.rxvolley.client.HttpCallback;
 import com.kymjs.rxvolley.http.VolleyError;
 import com.liuguilin.lovewallpaper.R;
+import com.liuguilin.lovewallpaper.activity.GalleryActivity;
 import com.liuguilin.lovewallpaper.adapter.CategoryDataAdapter;
 import com.liuguilin.lovewallpaper.model.ApiModel;
 import com.liuguilin.lovewallpaper.model.CategoryDataModel;
@@ -40,6 +43,7 @@ public class RecommendFragment extends Fragment {
 
     private CategoryDataAdapter mCategoryDataAdapter;
     private List<CategoryGridModel> mList = new ArrayList<>();
+    private ArrayList<String>mListBigUrl = new ArrayList<>();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -71,6 +75,16 @@ public class RecommendFragment extends Fragment {
             @Override
             public void onScroll(AbsListView absListView, int i, int i1, int i2) {
 
+            }
+        });
+
+        mGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Intent intent = new Intent(getActivity(), GalleryActivity.class);
+                intent.putExtra("position", i);
+                intent.putStringArrayListExtra("bigUrl", mListBigUrl);
+                startActivity(intent);
             }
         });
     }
@@ -119,6 +133,7 @@ public class RecommendFragment extends Fragment {
             models.setDown_stat(model.getData().get(i).getDown_stat());
             models.setDown(model.getData().get(i).getDown());
             models.setBig(model.getData().get(i).getBig());
+            mListBigUrl.add(model.getData().get(i).getBig());
             models.setKey(model.getData().get(i).getKey());
             mList.add(models);
         }

@@ -128,9 +128,9 @@ public class GalleryActivity extends AppCompatActivity implements View.OnClickLi
                     public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
                         try {
                             wpManager.setBitmap(resource);
-                            Toast.makeText(GalleryActivity.this, "设置成功", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(GalleryActivity.this, "设置壁纸成功", Toast.LENGTH_SHORT).show();
                         } catch (IOException e) {
-                            Toast.makeText(GalleryActivity.this, "设置失败", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(GalleryActivity.this, "设置壁纸失败", Toast.LENGTH_SHORT).show();
                         }
                     }
                 });

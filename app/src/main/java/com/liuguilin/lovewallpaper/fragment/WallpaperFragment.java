@@ -8,12 +8,14 @@ package com.liuguilin.lovewallpaper.fragment;
  *  描述：    壁纸
  */
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.GridView;
 
 import com.google.gson.Gson;
@@ -21,6 +23,7 @@ import com.kymjs.rxvolley.RxVolley;
 import com.kymjs.rxvolley.client.HttpCallback;
 import com.kymjs.rxvolley.http.VolleyError;
 import com.liuguilin.lovewallpaper.R;
+import com.liuguilin.lovewallpaper.activity.GalleryActivity;
 import com.liuguilin.lovewallpaper.adapter.SpecialGridAdapter;
 import com.liuguilin.lovewallpaper.model.ApiModel;
 import com.liuguilin.lovewallpaper.model.SpecialApiModel;
@@ -34,6 +37,7 @@ public class WallpaperFragment extends Fragment{
     private GridView mGridView;
     private SpecialGridAdapter mSpecialGridAdapter;
     private List<SpecialGridModel> mList = new ArrayList<>();
+    private ArrayList<String>mListBigUrl = new ArrayList<>();
 
     @Override
     public View onCreateView(LayoutInflater inflater,  ViewGroup container,  Bundle savedInstanceState) {
@@ -58,6 +62,16 @@ public class WallpaperFragment extends Fragment{
                 }
             });
         }
+
+        mGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Intent intent = new Intent(getActivity(), GalleryActivity.class);
+                intent.putExtra("position", i);
+                intent.putStringArrayListExtra("bigUrl", mListBigUrl);
+                startActivity(intent);
+            }
+        });
     }
 
     private void parsingJson(String t) {
@@ -67,6 +81,7 @@ public class WallpaperFragment extends Fragment{
             SpecialGridModel models = new SpecialGridModel();
             models.setKey(model.getData().get(i).getKey());
             models.setBig(model.getData().get(i).getBig());
+            mListBigUrl.add(model.getData().get(i).getBig());
             models.setDown(model.getData().get(i).getDown());
             models.setDown_stat(model.getData().get(i).getDown_stat());
             models.setSmall(model.getData().get(i).getSmall());

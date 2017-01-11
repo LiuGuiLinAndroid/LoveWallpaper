@@ -13,6 +13,7 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.AbsListView;
+import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.LinearLayout;
 
@@ -40,6 +41,7 @@ public class CategoryActivity extends BaseActivity {
 
     private CategoryDataAdapter mCategoryDataAdapter;
     private List<CategoryGridModel> mList = new ArrayList<>();
+    private ArrayList<String>mListBigUrl = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,6 +83,16 @@ public class CategoryActivity extends BaseActivity {
             @Override
             public void onScroll(AbsListView absListView, int i, int i1, int i2) {
 
+            }
+        });
+
+        mGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Intent intent = new Intent(CategoryActivity.this, GalleryActivity.class);
+                intent.putExtra("position", i);
+                intent.putStringArrayListExtra("bigUrl", mListBigUrl);
+                startActivity(intent);
             }
         });
     }
@@ -129,6 +141,7 @@ public class CategoryActivity extends BaseActivity {
             models.setDown_stat(model.getData().get(i).getDown_stat());
             models.setDown(model.getData().get(i).getDown());
             models.setBig(model.getData().get(i).getBig());
+            mListBigUrl.add(model.getData().get(i).getBig());
             models.setKey(model.getData().get(i).getKey());
             mList.add(models);
         }
