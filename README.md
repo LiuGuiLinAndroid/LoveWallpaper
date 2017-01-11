@@ -8,6 +8,7 @@
 
 ## preview
 
+![preview1.0](https://github.com/LiuGuiLinAndroid/LoveWallpaper/blob/master/preview/preview1.0.png?raw=true)
 
 ## License
   
