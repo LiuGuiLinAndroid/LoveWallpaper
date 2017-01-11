@@ -5,6 +5,7 @@
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.SET_WALLPAPER"/>
 
     <application
         android:allowBackup="true"
@@ -33,6 +34,9 @@
             android:label="@string/text_setting"/>
         <activity android:name=".activity.SpecialActivity"/>
         <activity android:name=".activity.CategoryActivity"/>
+        <activity
+            android:name=".activity.GalleryActivity"
+            android:theme="@style/NoTitleFullscreen"/>
 
     </application>
 

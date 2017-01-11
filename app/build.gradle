@@ -40,6 +40,7 @@ dependencies {
     //CircleImageView
     compile 'de.hdodenhof:circleimageview:2.1.0'
     //RxVolley
-    compile 'com.kymjs.rxvolley:rxvolley:1.1.2'
+    compile 'com.kymjs.rxvolley:rxvolley:1.1.4'
+    compile 'com.kymjs.rxvolley:okhttp:1.1.4'
 
 }

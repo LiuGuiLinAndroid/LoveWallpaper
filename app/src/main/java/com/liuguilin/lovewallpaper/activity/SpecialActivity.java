@@ -12,6 +12,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -45,6 +46,7 @@ public class SpecialActivity extends BaseActivity {
 
     private SpecialGridAdapter mSpecialGridAdapter;
     private List<SpecialGridModel> mList = new ArrayList<>();
+    private ArrayList<String> mListBigUrl = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,7 +63,7 @@ public class SpecialActivity extends BaseActivity {
         mGridView = (GridView) findViewById(R.id.mGridView);
         ll_special_title = (LinearLayout) findViewById(R.id.ll_special_title);
 
-        Intent intent = getIntent();
+        final Intent intent = getIntent();
         name = intent.getStringExtra("name");
         desc = intent.getStringExtra("desc");
         icon = intent.getStringExtra("icon");
@@ -94,6 +96,16 @@ public class SpecialActivity extends BaseActivity {
                 }
             });
         }
+
+        mGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Intent intent = new Intent(SpecialActivity.this, GalleryActivity.class);
+                intent.putExtra("position", i);
+                intent.putStringArrayListExtra("bigUrl", mListBigUrl);
+                startActivity(intent);
+            }
+        });
     }
 
     //解析
@@ -104,6 +116,7 @@ public class SpecialActivity extends BaseActivity {
             SpecialGridModel models = new SpecialGridModel();
             models.setKey(model.getData().get(i).getKey());
             models.setBig(model.getData().get(i).getBig());
+            mListBigUrl.add(model.getData().get(i).getBig());
             models.setDown(model.getData().get(i).getDown());
             models.setDown_stat(model.getData().get(i).getDown_stat());
             models.setSmall(model.getData().get(i).getSmall());
