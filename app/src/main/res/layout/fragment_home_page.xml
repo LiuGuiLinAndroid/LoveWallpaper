@@ -1,35 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:id="@+id/mScrollView"
+    android:layout_height="match_parent">
 
-    <android.support.v4.view.ViewPager
-        android:id="@+id/mViewPager"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="200dp"/>
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1">
-
-        <GridView
-            android:id="@+id/mGridView"
+        <android.support.v4.view.ViewPager
+            android:id="@+id/mViewPager"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:numColumns="2"/>
+            android:layout_height="200dp"/>
 
-        <TextView
-            android:layout_width="100dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:background="@color/colorAccent"
-            android:gravity="center"
-            android:text="Every Day"
-            android:textColor="@color/colorWhite"/>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
 
-    </RelativeLayout>
+            <com.liuguilin.lovewallpaper.view.CalculateGridView
+                android:id="@+id/mGridView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:numColumns="2"/>
 
-</LinearLayout>
+            <TextView
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:background="@color/colorAccent"
+                android:gravity="center"
+                android:text="Every Day"
+                android:textColor="@color/colorWhite"/>
+
+        </RelativeLayout>
+
+    </LinearLayout>
+</ScrollView>

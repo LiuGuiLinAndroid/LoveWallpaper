@@ -26,6 +26,11 @@ public class Constants {
     public static final String WALLPAPER_BASE_URL = "http://open.lovebizhi.com/";
     public static final String WEATHER_BASE_URL = "https://api.thinkpage.cn/";
 
+    //视频地址
+    public static final String IMOOC_VIDEO_URL = "http://szv1.mukewang.com/5876eb5be520e572618b458b/H.mp4";
+    //图片地址
+    public static final String IMOOC_IMAGE_URL = "http://szimg.mukewang.com/5876eedd0001d20909000500.jpg";
+
     //心知天气key
     public static final String THINKPAPE_KEY = "cjfbaiq6lln0oqk1";
 

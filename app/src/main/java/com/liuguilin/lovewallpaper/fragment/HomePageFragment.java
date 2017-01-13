@@ -22,6 +22,7 @@ import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.liuguilin.lovewallpaper.R;
@@ -54,7 +55,7 @@ public class HomePageFragment extends Fragment {
     private List<String> mListUrl = new ArrayList<>();
     private List<String> mListTitle = new ArrayList<>();
     private MainGridAdapter mainGridAdapter;
-
+    private ScrollView mScrollView;
 
     //轮播
     public Handler mHandler = new Handler() {
@@ -86,6 +87,7 @@ public class HomePageFragment extends Fragment {
 
         mViewPager = (ViewPager) view.findViewById(R.id.mViewPager);
         mGridView = (GridView) view.findViewById(R.id.mGridView);
+        mScrollView = (ScrollView) view.findViewById(R.id.mScrollView);
 
         mGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -165,6 +167,13 @@ public class HomePageFragment extends Fragment {
         mViewPager.setAdapter(new BannerAdapter());
         mViewPager.setCurrentItem(mListTitle.size() * 100);
         mHandler.sendEmptyMessageDelayed(Constants.HANDLER_AUTO_SHUFFLING, 3000);
+        //滚动到顶部
+        mHandler.post(new Runnable() {
+            @Override
+            public void run() {
+                mScrollView.fullScroll(ScrollView.FOCUS_UP);
+            }
+        });
     }
 
     private class BannerAdapter extends PagerAdapter {

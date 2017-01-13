@@ -5,7 +5,7 @@ android {
     buildToolsVersion "25.0.1"
     defaultConfig {
         applicationId "com.liuguilin.lovewallpaper"
-        minSdkVersion 15
+        minSdkVersion 16
         targetSdkVersion 25
         versionCode 1
         versionName "1.0"
@@ -42,5 +42,7 @@ dependencies {
     //RxVolley
     compile 'com.kymjs.rxvolley:rxvolley:1.1.4'
     compile 'com.kymjs.rxvolley:okhttp:1.1.4'
+    //JC Play
+    compile 'fm.jiecao:jiecaovideoplayer:5.3'
 
 }
