@@ -26,6 +26,11 @@
             android:title="@string/text_recommend"/>
 
         <item
+            android:id="@+id/nav_album"
+            android:icon="@drawable/ic_menu_manage"
+            android:title="@string/text_album"/>
+
+        <item
             android:id="@+id/nav_weather"
             android:icon="@drawable/ic_menu_share"
             android:title="@string/text_weather"/>

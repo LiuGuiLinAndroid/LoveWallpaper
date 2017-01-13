@@ -12,7 +12,8 @@ import android.os.Bundle;
 
 import com.liuguilin.lovewallpaper.R;
 
-public class SettingActivity extends BaseActivity{
+public class SettingActivity extends BaseActivity {
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

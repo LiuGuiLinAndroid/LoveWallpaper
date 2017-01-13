@@ -20,6 +20,7 @@ public class BaseActivity extends AppCompatActivity {
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setElevation(0);
+
     }
 
     @Override

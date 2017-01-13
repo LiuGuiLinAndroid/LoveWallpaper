@@ -15,6 +15,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.liuguilin.lovewallpaper.activity.SettingActivity;
+import com.liuguilin.lovewallpaper.fragment.AlbumFragment;
 import com.liuguilin.lovewallpaper.fragment.CategoryFragment;
 import com.liuguilin.lovewallpaper.fragment.HomePageFragment;
 import com.liuguilin.lovewallpaper.fragment.NewsFragment;
@@ -35,6 +36,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private RecommendFragment recommendFragment;
     private NewsFragment newsFragment;
     private WeatherFragment weatherFragment;
+    private AlbumFragment albumFragment;
 
     private CustomDialog dialogShare;
 
@@ -86,6 +88,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 break;
             case R.id.nav_weather:
                 initWeather();
+                break;
+            case R.id.nav_album:
+                inintAlbum();
                 break;
             case R.id.nav_news:
                 initNews();
@@ -231,6 +236,21 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         transaction.commit();
     }
 
+    //相册
+    private void inintAlbum(){
+        getSupportActionBar().setTitle(getString(R.string.text_album));
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        if (albumFragment == null) {
+            albumFragment = new AlbumFragment();
+            transaction.add(R.id.main_frame_layout, albumFragment);
+        }
+        //隐藏所有fragment
+        hideFragment(transaction);
+        //显示需要显示的fragment
+        transaction.show(albumFragment);
+        transaction.commit();
+    }
+
     //隐藏所有Fragment
     private void hideFragment(FragmentTransaction transaction) {
         if (homePageFragment != null) {
@@ -253,6 +273,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
         if (weatherFragment != null) {
             transaction.hide(weatherFragment);
+        }
+        if(albumFragment != null){
+            transaction.hide(albumFragment);
         }
 
     }
