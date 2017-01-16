@@ -22,19 +22,15 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.GridView;
 
-import com.kymjs.rxvolley.toolbox.FileUtils;
 import com.liuguilin.lovewallpaper.R;
 import com.liuguilin.lovewallpaper.activity.GalleryActivity;
 import com.liuguilin.lovewallpaper.adapter.AlbumGridAdapter;
 import com.liuguilin.lovewallpaper.entity.Constants;
-import com.liuguilin.lovewallpaper.utils.L;
 
 import java.util.ArrayList;
 
 public class AlbumFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
 
-    //本地相册路径
-    private String file = FileUtils.getSDCardPath() + "/LoveWallpaper/";
     private GridView mGridView;
     //相册路径
     private ArrayList<String> paths = new ArrayList<>();
