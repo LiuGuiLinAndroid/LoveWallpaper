@@ -10,6 +10,8 @@
 
 ![preview1.0](https://github.com/LiuGuiLinAndroid/LoveWallpaper/blob/master/preview/preview1.0.png?raw=true)
 
+![preview12.0](https://github.com/LiuGuiLinAndroid/LoveWallpaper/blob/master/preview/preview2.0.png?raw=true)
+
 ## License
   
 开源协议[Apache-2.0](https://opensource.org/licenses/apache2.0.php)
