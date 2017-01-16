@@ -175,9 +175,17 @@ public class WeatherFragment extends Fragment implements View.OnClickListener {
         switch (view.getId()) {
             case R.id.tv_city:
                 Intent intent = new Intent(getActivity(), CityActivity.class);
-                startActivityForResult(intent, 0);
+                startActivityForResult(intent, Constants.REQUEST_CODE);
                 break;
         }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == Constants.REQUEST_CODE) {
+            //String result = data.getStringExtra("city_name");
+        }
+        super.onActivityResult(requestCode, resultCode, data);
     }
 
     //文字

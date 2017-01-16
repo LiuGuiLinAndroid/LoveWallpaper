@@ -5,38 +5,38 @@
         <item
             android:id="@+id/nav_home_page"
             android:checked="true"
-            android:icon="@drawable/ic_menu_camera"
+            android:icon="@drawable/icon_home_page"
             android:title="@string/text_home_page"/>
         <item
             android:id="@+id/nav_category"
-            android:icon="@drawable/ic_menu_gallery"
+            android:icon="@drawable/icon_category"
             android:title="@string/text_category"/>
         <item
             android:id="@+id/nav_ranking"
-            android:icon="@drawable/ic_menu_slideshow"
+            android:icon="@drawable/icon_ranking"
             android:title="@string/text_ranking"/>
         <item
             android:id="@+id/nav_wallpaper"
-            android:icon="@drawable/ic_menu_manage"
+            android:icon="@drawable/icon_wallpaper"
             android:title="@string/text_wallpaper"/>
 
         <item
             android:id="@+id/nav_recommend"
-            android:icon="@drawable/ic_menu_manage"
+            android:icon="@drawable/icon_recommend"
             android:title="@string/text_recommend"/>
 
         <item
             android:id="@+id/nav_album"
-            android:icon="@drawable/ic_menu_manage"
+            android:icon="@drawable/icon_album"
             android:title="@string/text_album"/>
 
         <item
             android:id="@+id/nav_weather"
-            android:icon="@drawable/ic_menu_share"
+            android:icon="@drawable/icon_weather"
             android:title="@string/text_weather"/>
         <item
             android:id="@+id/nav_news"
-            android:icon="@drawable/ic_menu_share"
+            android:icon="@drawable/icon_news"
             android:title="@string/text_news"/>
 
     </group>
@@ -45,11 +45,11 @@
         <menu>
             <item
                 android:id="@+id/nav_share"
-                android:icon="@drawable/ic_menu_share"
+                android:icon="@drawable/icon_share"
                 android:title="@string/text_share"/>
             <item
                 android:id="@+id/nav_setting"
-                android:icon="@drawable/ic_menu_send"
+                android:icon="@drawable/icon_setting"
                 android:title="@string/text_setting"/>
         </menu>
     </item>

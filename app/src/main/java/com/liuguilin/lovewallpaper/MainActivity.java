@@ -66,7 +66,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-
+        //显示原本的色彩
+        navigationView.setItemIconTintList(null);
         initHomePager();
     }
 

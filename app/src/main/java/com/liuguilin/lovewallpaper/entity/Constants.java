@@ -18,6 +18,9 @@ import com.liuguilin.lovewallpaper.view.CustomDialog;
 
 public class Constants {
 
+    //返回码
+    public static final int REQUEST_CODE = 101;
+
     //第一次启动
     public static final int HANDLER_FIRST_START = 1000;
     //无限轮播

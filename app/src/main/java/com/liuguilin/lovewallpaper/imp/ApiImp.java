@@ -34,4 +34,5 @@ public interface ApiImp {
     //获取生活指数
     @GET("v3/life/suggestion.json?")
     Call<WeatherLifeApiModel> getWeatherLifeApi(@Query("key") String key, @Query("location") String city);
+
 }
