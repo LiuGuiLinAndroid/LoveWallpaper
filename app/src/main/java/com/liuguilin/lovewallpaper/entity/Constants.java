@@ -27,6 +27,8 @@ public class Constants {
     public static final int HANDLER_AUTO_SHUFFLING = 1001;
     //下拉刷新
     public static final int HANDLER_REFRESH = 1002;
+    //停止动画
+    public static final int HANDLER_STOP_ANIMATION = 1003;
 
     public static final String WALLPAPER_BASE_URL = "http://open.lovebizhi.com/";
     public static final String WEATHER_BASE_URL = "https://api.thinkpage.cn/";
@@ -64,7 +66,8 @@ public class Constants {
     //封装dialog
     public static CustomDialog showDialog(Context mContext, int layout) {
         //初始化提示框
-        CustomDialog dialog = new CustomDialog(mContext, 0, 0, layout, R.style.Theme_dialog, Gravity.CENTER, R.style.pop_anim_style);
+        CustomDialog dialog = new CustomDialog(mContext, 0, 0,
+                layout, R.style.Theme_dialog, Gravity.CENTER, R.style.pop_anim_style);
         return dialog;
     }
 

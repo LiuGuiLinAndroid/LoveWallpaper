@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.liuguilin.lovewallpaper.R;
@@ -68,5 +69,19 @@ public class SettingAdapter extends BaseAdapter {
     class ViewHolder {
         private ImageView iv_setting_icon;
         private TextView tv_setting_content;
+    }
+
+    //更新单个item
+    public void updataOneItemView(int position, ListView listView,String text) {
+        int visibleFirstPosi = listView.getFirstVisiblePosition();
+        int visibleLastPosi = listView.getLastVisiblePosition();
+        if (position >= visibleFirstPosi && position <= visibleLastPosi) {
+            View view = listView.getChildAt(position - visibleFirstPosi);
+            ViewHolder holder = (ViewHolder) view.getTag();
+            holder.tv_setting_content.setText(text);
+            mList.set(position, text);
+        } else {
+            mList.set(position, text);
+        }
     }
 }

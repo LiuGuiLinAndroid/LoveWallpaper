@@ -8,21 +8,52 @@ package com.liuguilin.lovewallpaper.activity;
  *  描述：    设置
  */
 
+import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.liuguilin.lovewallpaper.R;
 import com.liuguilin.lovewallpaper.adapter.SettingAdapter;
 import com.liuguilin.lovewallpaper.entity.Constants;
+import com.liuguilin.lovewallpaper.utils.CleanMessageUtils;
+import com.liuguilin.lovewallpaper.view.CustomDialog;
+import com.liuguilin.lovewallpaper.view.PaperShredderView;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class SettingActivity extends BaseActivity {
+public class SettingActivity extends BaseActivity implements AdapterView.OnItemClickListener {
 
     private ListView mListView;
     private SettingAdapter mSettingAdapter;
     private List<String> mList = new ArrayList<>();
+
+    private CustomDialog dialog_clear_data;
+    private PaperShredderView mPaperShredderView;
+
+    private Handler mHandler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            switch (msg.what) {
+                case Constants.HANDLER_STOP_ANIMATION:
+                    mPaperShredderView.stopAnim();
+                    dialog_clear_data.dismiss();
+                    try {
+                        mSettingAdapter.updataOneItemView(1, mListView, "清理缓存\t\t\t" + CleanMessageUtils.getTotalCacheSize(SettingActivity.this));
+                    } catch (Exception e) {
+                        mSettingAdapter.updataOneItemView(1, mListView, "清理缓存");
+                    }
+                    mSettingAdapter.notifyDataSetChanged();
+                    break;
+            }
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,13 +65,54 @@ public class SettingActivity extends BaseActivity {
 
     private void initView() {
         mList.add("系统信息");
-        mList.add("清理缓存");
-        mList.add("版本号:" + Constants.getAppVersion(this));
+        try {
+            mList.add("清理缓存\t\t\t" + CleanMessageUtils.getTotalCacheSize(this));
+        } catch (Exception e) {
+            mList.add("清理缓存");
+        }
+        mList.add("版本号\t\t\t" + Constants.getAppVersion(this));
         mList.add("Github");
         mList.add("关于软件");
 
         mListView = (ListView) findViewById(R.id.mListView);
         mSettingAdapter = new SettingAdapter(this, mList);
         mListView.setAdapter(mSettingAdapter);
+        mListView.setOnItemClickListener(this);
+
+        dialog_clear_data = Constants.showDialog(this, R.layout.dialog_clear_data);
+        mPaperShredderView = (PaperShredderView) dialog_clear_data.findViewById(R.id.mPaperShredderView);
+        mPaperShredderView.setSherderProgress(true);
+        mPaperShredderView.setTitle("清理缓存");
+        mPaperShredderView.setTextColor(Color.WHITE);
+        mPaperShredderView.setPaperColor(Color.WHITE);
+        mPaperShredderView.setBgColor(R.color.colorAccent);
+        mPaperShredderView.setTextShadow(true);
+        mPaperShredderView.setPaperEnterColor(R.color.colorAccent);
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+        switch (i) {
+            case 0:
+
+                break;
+            case 1:
+                if (mList.get(1).length() > "清理缓存".length()) {
+                    dialog_clear_data.show();
+                    mPaperShredderView.startAnim(3000);
+                    CleanMessageUtils.clearAllCache(this);
+                    mHandler.sendEmptyMessageDelayed(Constants.HANDLER_STOP_ANIMATION, 3000);
+                }
+                break;
+            case 2:
+
+                break;
+            case 3:
+
+                break;
+            case 4:
+                startActivity(new Intent(this,AboutActivity.class));
+                break;
+        }
     }
 }

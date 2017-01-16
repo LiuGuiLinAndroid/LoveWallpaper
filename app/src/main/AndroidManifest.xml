@@ -44,6 +44,10 @@
             android:name=".activity.CityActivity"
             android:label="@string/text_select_city"/>
 
+        <activity
+            android:name=".activity.AboutActivity"
+            android:label="关于"/>
+
     </application>
 
 </manifest>
