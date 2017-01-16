@@ -11,8 +11,11 @@ package com.liuguilin.lovewallpaper.fragment;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,10 +26,12 @@ import com.kymjs.rxvolley.toolbox.FileUtils;
 import com.liuguilin.lovewallpaper.R;
 import com.liuguilin.lovewallpaper.activity.GalleryActivity;
 import com.liuguilin.lovewallpaper.adapter.AlbumGridAdapter;
+import com.liuguilin.lovewallpaper.entity.Constants;
+import com.liuguilin.lovewallpaper.utils.L;
 
 import java.util.ArrayList;
 
-public class AlbumFragment extends Fragment {
+public class AlbumFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
 
     //本地相册路径
     private String file = FileUtils.getSDCardPath() + "/LoveWallpaper/";
@@ -34,6 +39,27 @@ public class AlbumFragment extends Fragment {
     //相册路径
     private ArrayList<String> paths = new ArrayList<>();
     private AlbumGridAdapter albumGridAdapter;
+    //下拉刷新
+    private SwipeRefreshLayout mSwipeRefreshLayout;
+
+
+    private Handler mHandler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            switch (msg.what) {
+                case Constants.HANDLER_REFRESH:
+                    paths.clear();
+                    L.i("HANDLER_REFRESH");
+                    getAllImagePath();
+                    albumGridAdapter.notifyDataSetChanged();
+                    if(mSwipeRefreshLayout.isRefreshing()){
+                        mSwipeRefreshLayout.setRefreshing(false);
+                    }
+                    break;
+            }
+        }
+    };
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -43,9 +69,11 @@ public class AlbumFragment extends Fragment {
     }
 
     private void initView(View view) {
+        mSwipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.mSwipeRefreshLayout);
+        mSwipeRefreshLayout.setOnRefreshListener(this);
         mGridView = (GridView) view.findViewById(R.id.mGridView);
         getAllImagePath();
-        albumGridAdapter = new AlbumGridAdapter(getActivity(),paths);
+        albumGridAdapter = new AlbumGridAdapter(getActivity(), paths);
         mGridView.setAdapter(albumGridAdapter);
 
         mGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -70,5 +98,12 @@ public class AlbumFragment extends Fragment {
             paths.add(path);
         }
         cursor.close();
+    }
+
+    //下拉回调
+    @Override
+    public void onRefresh() {
+        L.i("onRefresh");
+        mHandler.sendEmptyMessage(Constants.HANDLER_REFRESH);
     }
 }

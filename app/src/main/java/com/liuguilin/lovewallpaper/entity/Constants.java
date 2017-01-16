@@ -22,6 +22,8 @@ public class Constants {
     public static final int HANDLER_FIRST_START = 1000;
     //无限轮播
     public static final int HANDLER_AUTO_SHUFFLING = 1001;
+    //下拉刷新
+    public static final int HANDLER_REFRESH = 1002;
 
     public static final String WALLPAPER_BASE_URL = "http://open.lovebizhi.com/";
     public static final String WEATHER_BASE_URL = "https://api.thinkpage.cn/";
@@ -33,6 +35,10 @@ public class Constants {
 
     //心知天气key
     public static final String THINKPAPE_KEY = "cjfbaiq6lln0oqk1";
+
+    //生活指数图片
+    public static final int WEATHER_LIFE_ICON[] = {R.drawable.icon_car_washing, R.drawable.icon_dressing
+            , R.drawable.icon_flu, R.drawable.icon_sport, R.drawable.icon_travel, R.drawable.icon_uv};
 
     //天气图标
     public static final int WEATHER_ICON[] =

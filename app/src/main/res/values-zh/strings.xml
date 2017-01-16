@@ -12,6 +12,7 @@
     <string name="text_weather">天气</string>
     <string name="text_news">新闻</string>
     <string name="text_album">相册</string>
+    <string name="text_select_city">选择城市</string>
 
 
 </resources>

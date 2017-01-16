@@ -32,11 +32,17 @@
         <activity
             android:name=".activity.SettingActivity"
             android:label="@string/text_setting"/>
+
         <activity android:name=".activity.SpecialActivity"/>
         <activity android:name=".activity.CategoryActivity"/>
+
         <activity
             android:name=".activity.GalleryActivity"
             android:theme="@style/NoTitleFullscreen"/>
+
+        <activity
+            android:name=".activity.CityActivity"
+            android:label="@string/text_select_city"/>
 
     </application>
 

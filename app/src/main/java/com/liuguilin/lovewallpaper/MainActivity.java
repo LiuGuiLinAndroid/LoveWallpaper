@@ -1,6 +1,8 @@
 package com.liuguilin.lovewallpaper;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
@@ -112,7 +114,20 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
-            super.onBackPressed();
+            //取消提示框
+            new AlertDialog.Builder(this)
+                    .setMessage("是否退出应用？")
+                    .setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+
+                        }
+                    }).setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    finish();
+                }
+            }).show();
         }
     }
 
@@ -237,7 +252,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     //相册
-    private void inintAlbum(){
+    private void inintAlbum() {
         getSupportActionBar().setTitle(getString(R.string.text_album));
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         if (albumFragment == null) {
@@ -274,7 +289,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         if (weatherFragment != null) {
             transaction.hide(weatherFragment);
         }
-        if(albumFragment != null){
+        if (albumFragment != null) {
             transaction.hide(albumFragment);
         }
 

@@ -19,7 +19,6 @@ import android.widget.TextView;
 import com.liuguilin.lovewallpaper.R;
 import com.liuguilin.lovewallpaper.entity.Constants;
 import com.liuguilin.lovewallpaper.model.WeatherGridModel;
-import com.liuguilin.lovewallpaper.utils.L;
 
 import java.util.List;
 
@@ -79,7 +78,6 @@ public class WeatherGradAdapter extends BaseAdapter {
                     break;
             }
         } else {
-            L.i("no null");
             switch (type) {
                 case VALUE_TEXT:
                     viewHolderText = (ViewHolderText) view.getTag();
@@ -96,7 +94,21 @@ public class WeatherGradAdapter extends BaseAdapter {
                 viewHolderText.iv_weather_text_image.setBackgroundResource(Constants.WEATHER_ICON[model.getCode()]);
                 break;
             case VALUE_IMAGE:
-                viewHolderImage.tv_weather_image_text.setText(model.getText());
+                String text = model.getText();
+                viewHolderImage.tv_weather_image_text.setText(text);
+                if (text.startsWith("洗车")) {
+                    viewHolderImage.iv_weather_image.setBackgroundResource(Constants.WEATHER_LIFE_ICON[0]);
+                } else if (text.startsWith("穿衣")) {
+                    viewHolderImage.iv_weather_image.setBackgroundResource(Constants.WEATHER_LIFE_ICON[1]);
+                } else if (text.startsWith("感冒")) {
+                    viewHolderImage.iv_weather_image.setBackgroundResource(Constants.WEATHER_LIFE_ICON[2]);
+                } else if (text.startsWith("运动")) {
+                    viewHolderImage.iv_weather_image.setBackgroundResource(Constants.WEATHER_LIFE_ICON[3]);
+                } else if (text.startsWith("旅游")) {
+                    viewHolderImage.iv_weather_image.setBackgroundResource(Constants.WEATHER_LIFE_ICON[4]);
+                } else if (text.startsWith("紫外线")) {
+                    viewHolderImage.iv_weather_image.setBackgroundResource(Constants.WEATHER_LIFE_ICON[5]);
+                }
                 break;
         }
 

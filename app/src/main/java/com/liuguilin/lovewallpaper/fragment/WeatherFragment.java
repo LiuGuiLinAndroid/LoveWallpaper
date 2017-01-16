@@ -8,6 +8,7 @@ package com.liuguilin.lovewallpaper.fragment;
  *  描述：    天气
  */
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -18,6 +19,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.liuguilin.lovewallpaper.R;
+import com.liuguilin.lovewallpaper.activity.CityActivity;
 import com.liuguilin.lovewallpaper.adapter.WeatherGradAdapter;
 import com.liuguilin.lovewallpaper.entity.Constants;
 import com.liuguilin.lovewallpaper.imp.ApiImp;
@@ -88,7 +90,7 @@ public class WeatherFragment extends Fragment implements View.OnClickListener {
             public void onResponse(Call<WeatherApiModel> call, Response<WeatherApiModel> response) {
                 if (response.isSuccessful()) {
                     tv_temperature.setText(response.body().getResults().get(0).getNow().getTemperature() + "℃"
-                    + " | " + response.body().getResults().get(0).getNow().getText());
+                            + " | " + response.body().getResults().get(0).getNow().getText());
                     iv_weather_icon.setBackgroundResource(Constants.WEATHER_ICON[Integer.parseInt(response.body().getResults().get(0).getNow().getCode())]);
                 }
             }
@@ -172,7 +174,8 @@ public class WeatherFragment extends Fragment implements View.OnClickListener {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.tv_city:
-
+                Intent intent = new Intent(getActivity(), CityActivity.class);
+                startActivityForResult(intent, 0);
                 break;
         }
     }
