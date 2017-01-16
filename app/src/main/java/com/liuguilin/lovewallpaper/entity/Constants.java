@@ -43,6 +43,10 @@ public class Constants {
     public static final int WEATHER_LIFE_ICON[] = {R.drawable.icon_car_washing, R.drawable.icon_dressing
             , R.drawable.icon_flu, R.drawable.icon_sport, R.drawable.icon_travel, R.drawable.icon_uv};
 
+    //设置图标
+    public static final int SETTING_ICON[] = {R.drawable.icon_setting_msg, R.drawable.icon_clear
+            , R.drawable.icon_version, R.drawable.icon_git, R.drawable.icon_about};
+
     //天气图标
     public static final int WEATHER_ICON[] =
             {R.drawable.w0, R.drawable.w1, R.drawable.w2, R.drawable.w3, R.drawable.w4

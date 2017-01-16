@@ -9,6 +9,7 @@ package com.liuguilin.lovewallpaper.adapter;
  */
 
 import android.content.Context;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -91,7 +92,9 @@ public class WeatherGradAdapter extends BaseAdapter {
         switch (type) {
             case VALUE_TEXT:
                 viewHolderText.tv_weather_text.setText(model.getText());
-                viewHolderText.iv_weather_text_image.setBackgroundResource(Constants.WEATHER_ICON[model.getCode()]);
+                if (!TextUtils.isEmpty(model.getText())) {
+                    viewHolderText.iv_weather_text_image.setBackgroundResource(Constants.WEATHER_ICON[model.getCode()]);
+                }
                 break;
             case VALUE_IMAGE:
                 String text = model.getText();

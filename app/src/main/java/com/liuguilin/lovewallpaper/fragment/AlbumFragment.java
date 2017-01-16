@@ -50,7 +50,6 @@ public class AlbumFragment extends Fragment implements SwipeRefreshLayout.OnRefr
             switch (msg.what) {
                 case Constants.HANDLER_REFRESH:
                     paths.clear();
-                    L.i("HANDLER_REFRESH");
                     getAllImagePath();
                     albumGridAdapter.notifyDataSetChanged();
                     if(mSwipeRefreshLayout.isRefreshing()){
@@ -103,7 +102,6 @@ public class AlbumFragment extends Fragment implements SwipeRefreshLayout.OnRefr
     //下拉回调
     @Override
     public void onRefresh() {
-        L.i("onRefresh");
         mHandler.sendEmptyMessage(Constants.HANDLER_REFRESH);
     }
 }

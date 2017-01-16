@@ -43,6 +43,7 @@ public class WeatherFragment extends Fragment implements View.OnClickListener {
     private TextView tv_temperature;
     private ImageView iv_weather_icon;
     private TextView tv_city;
+    private TextView tv_date;
     private GridView mGridViewEveryDay;
     private String weatherCity = "深圳";
 
@@ -67,6 +68,7 @@ public class WeatherFragment extends Fragment implements View.OnClickListener {
         tv_city = (TextView) view.findViewById(R.id.tv_city);
         tv_city.setOnClickListener(this);
         tv_city.setText(weatherCity);
+        tv_date = (TextView) view.findViewById(R.id.tv_date);
 
         Retrofit retrofit = new Retrofit.Builder().baseUrl(Constants.WEATHER_BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create()).build();
@@ -152,6 +154,8 @@ public class WeatherFragment extends Fragment implements View.OnClickListener {
     private void parsingEveryDay(List<WeatherEveryDayApiModel.ResultsBean> results) {
         for (int i = 0; i < results.get(0).getDaily().size(); i++) {
             String data = results.get(0).getDaily().get(i).getDate();
+            //设置时间
+            tv_date.setText(results.get(0).getDaily().get(0).getDate());
             String text_day = results.get(0).getDaily().get(i).getText_day();
             String text_night = results.get(0).getDaily().get(i).getText_night();
             String high = results.get(0).getDaily().get(i).getHigh();
