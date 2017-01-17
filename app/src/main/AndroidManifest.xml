@@ -46,7 +46,12 @@
 
         <activity
             android:name=".activity.AboutActivity"
-            android:label="关于"/>
+            android:label="@string/text_about"/>
+
+        <activity android:name=".activity.WebViewActivity"/>
+
+        <activity android:name=".activity.AndroidVideoActivity"
+            android:label="@string/text_my_video"/>
 
     </application>
 

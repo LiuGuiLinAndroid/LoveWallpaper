@@ -38,6 +38,11 @@ public class Constants {
     //图片地址
     public static final String IMOOC_IMAGE_URL = "http://szimg.mukewang.com/5876eedd0001d20909000500.jpg";
 
+    //Blog
+    public static final String BLOG = "http://blog.csdn.net/qq_26787115";
+    //Github
+    public static final String GITHUB = "https://github.com/LiuGuiLinAndroid";
+
     //心知天气key
     public static final String THINKPAPE_KEY = "cjfbaiq6lln0oqk1";
 
