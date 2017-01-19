@@ -16,6 +16,7 @@ import android.os.Message;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.liuguilin.lovewallpaper.R;
 import com.liuguilin.lovewallpaper.adapter.SettingAdapter;
@@ -94,7 +95,7 @@ public class SettingActivity extends BaseActivity implements AdapterView.OnItemC
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
         switch (i) {
             case 0:
-
+                startActivity(new Intent(this, SystemInformationActivity.class));
                 break;
             case 1:
                 if (mList.get(1).length() > "清理缓存".length()) {
@@ -105,13 +106,13 @@ public class SettingActivity extends BaseActivity implements AdapterView.OnItemC
                 }
                 break;
             case 2:
-
+                Toast.makeText(this, "已经是最新版本", Toast.LENGTH_SHORT).show();
                 break;
             case 3:
-
+                Constants.startWebView(this, getString(R.string.app_name), Constants.LOVE_WALLPAPER_GITHUB);
                 break;
             case 4:
-                startActivity(new Intent(this,AboutActivity.class));
+                startActivity(new Intent(this, AboutActivity.class));
                 break;
         }
     }

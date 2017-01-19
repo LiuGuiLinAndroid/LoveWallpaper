@@ -9,11 +9,13 @@ package com.liuguilin.lovewallpaper.entity;
  */
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.view.Gravity;
 
 import com.liuguilin.lovewallpaper.R;
+import com.liuguilin.lovewallpaper.activity.WebViewActivity;
 import com.liuguilin.lovewallpaper.view.CustomDialog;
 
 public class Constants {
@@ -42,6 +44,8 @@ public class Constants {
     public static final String BLOG = "http://blog.csdn.net/qq_26787115";
     //Github
     public static final String GITHUB = "https://github.com/LiuGuiLinAndroid";
+    //项目 Github
+    public static final String LOVE_WALLPAPER_GITHUB = "https://github.com/LiuGuiLinAndroid/LoveWallpaper";
 
     //心知天气key
     public static final String THINKPAPE_KEY = "cjfbaiq6lln0oqk1";
@@ -88,5 +92,13 @@ public class Constants {
             version = "获取失败";
         }
         return version;
+    }
+
+    //跳转网页
+    public static void startWebView(Context mContext, String title, String url) {
+        Intent intent2 = new Intent(mContext, WebViewActivity.class);
+        intent2.putExtra("title", title);
+        intent2.putExtra("url", url);
+        mContext.startActivity(intent2);
     }
 }

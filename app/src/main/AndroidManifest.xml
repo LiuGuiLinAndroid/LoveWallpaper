@@ -50,8 +50,11 @@
 
         <activity android:name=".activity.WebViewActivity"/>
 
-        <activity android:name=".activity.AndroidVideoActivity"
+        <activity
+            android:name=".activity.AndroidVideoActivity"
             android:label="@string/text_my_video"/>
+
+        <activity android:name=".activity.SystemInformationActivity"/>
 
     </application>
 

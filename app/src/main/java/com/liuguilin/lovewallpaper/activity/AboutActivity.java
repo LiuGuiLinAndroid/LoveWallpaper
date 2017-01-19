@@ -68,16 +68,10 @@ public class AboutActivity extends BaseActivity implements View.OnClickListener,
 
                 break;
             case 1:
-                Intent intent1 = new Intent(this, WebViewActivity.class);
-                intent1.putExtra("title", "CSDN Blog");
-                intent1.putExtra("url", Constants.BLOG);
-                startActivity(intent1);
+                Constants.startWebView(this, "Github", Constants.GITHUB);
                 break;
             case 2:
-                Intent intent2 = new Intent(this, WebViewActivity.class);
-                intent2.putExtra("title", "Github");
-                intent2.putExtra("url", Constants.GITHUB);
-                startActivity(intent2);
+                Constants.startWebView(this, "CSDN Blog", Constants.BLOG);
                 break;
             case 3:
                 startActivity(new Intent(this, AndroidVideoActivity.class));

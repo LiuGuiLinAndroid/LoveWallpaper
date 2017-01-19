@@ -93,6 +93,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 initWeather();
                 break;
             case R.id.nav_album:
+                //检测权限
                 inintAlbum();
                 break;
             case R.id.nav_news:
@@ -293,6 +294,5 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         if (albumFragment != null) {
             transaction.hide(albumFragment);
         }
-
     }
 }

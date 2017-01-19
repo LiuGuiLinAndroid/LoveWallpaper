@@ -8,19 +8,23 @@ package com.liuguilin.lovewallpaper.fragment;
  *  描述：    相册
  */
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.GridView;
+import android.widget.Toast;
 
 import com.liuguilin.lovewallpaper.R;
 import com.liuguilin.lovewallpaper.activity.GalleryActivity;
@@ -48,7 +52,7 @@ public class AlbumFragment extends Fragment implements SwipeRefreshLayout.OnRefr
                     paths.clear();
                     getAllImagePath();
                     albumGridAdapter.notifyDataSetChanged();
-                    if(mSwipeRefreshLayout.isRefreshing()){
+                    if (mSwipeRefreshLayout.isRefreshing()) {
                         mSwipeRefreshLayout.setRefreshing(false);
                     }
                     break;
@@ -67,7 +71,7 @@ public class AlbumFragment extends Fragment implements SwipeRefreshLayout.OnRefr
         mSwipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.mSwipeRefreshLayout);
         mSwipeRefreshLayout.setOnRefreshListener(this);
         mGridView = (GridView) view.findViewById(R.id.mGridView);
-        getAllImagePath();
+        getPermission();
         albumGridAdapter = new AlbumGridAdapter(getActivity(), paths);
         mGridView.setAdapter(albumGridAdapter);
 
@@ -80,6 +84,30 @@ public class AlbumFragment extends Fragment implements SwipeRefreshLayout.OnRefr
                 startActivity(intent);
             }
         });
+    }
+
+    //获取读取内存卡权限
+    private void getPermission() {
+        if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            //申请CAMERA的权限
+            requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 101);
+        } else {
+            getAllImagePath();
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        switch (requestCode) {
+            case 101:
+                if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    getAllImagePath();
+                } else {
+                    Toast.makeText(getActivity(), "请打开读/写权限", Toast.LENGTH_LONG).show();
+                }
+                break;
+        }
     }
 
     //获取本地相册
@@ -99,5 +127,15 @@ public class AlbumFragment extends Fragment implements SwipeRefreshLayout.OnRefr
     @Override
     public void onRefresh() {
         mHandler.sendEmptyMessage(Constants.HANDLER_REFRESH);
+    }
+
+    //视图改变
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+        if(!hidden){
+            getAllImagePath();
+            albumGridAdapter.notifyDataSetChanged();
+        }
     }
 }
