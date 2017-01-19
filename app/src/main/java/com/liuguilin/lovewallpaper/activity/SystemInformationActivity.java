@@ -41,7 +41,7 @@ public class SystemInformationActivity extends BaseActivity {
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             getPermission();
-        } else {
+        }else {
             initData();
             initView();
         }
