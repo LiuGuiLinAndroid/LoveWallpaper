@@ -8,7 +8,9 @@ package com.liuguilin.lovewallpaper.utils;
  *  描述：    屏幕工具类
  */
 
+import android.app.Activity;
 import android.content.Context;
+import android.util.DisplayMetrics;
 import android.view.WindowManager;
 
 public class ScreenUtils {
@@ -34,5 +36,13 @@ public class ScreenUtils {
     //获取屏幕的高度
     public int getScreenHeight() {
         return windowManager.getDefaultDisplay().getHeight();
+    }
+
+    //获取设备分辨率
+    public String getDisplayMetrics(Activity mActivity) {
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        mActivity.getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+        return displayMetrics.widthPixels + "x"
+                + displayMetrics.heightPixels;
     }
 }

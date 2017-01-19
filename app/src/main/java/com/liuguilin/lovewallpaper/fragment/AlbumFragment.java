@@ -89,7 +89,6 @@ public class AlbumFragment extends Fragment implements SwipeRefreshLayout.OnRefr
     //获取读取内存卡权限
     private void getPermission() {
         if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-            //申请CAMERA的权限
             requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 101);
         } else {
             getAllImagePath();

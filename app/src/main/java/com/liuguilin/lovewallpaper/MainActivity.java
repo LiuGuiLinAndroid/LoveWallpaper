@@ -20,7 +20,6 @@ import com.liuguilin.lovewallpaper.activity.SettingActivity;
 import com.liuguilin.lovewallpaper.fragment.AlbumFragment;
 import com.liuguilin.lovewallpaper.fragment.CategoryFragment;
 import com.liuguilin.lovewallpaper.fragment.HomePageFragment;
-import com.liuguilin.lovewallpaper.fragment.NewsFragment;
 import com.liuguilin.lovewallpaper.fragment.RankingFragment;
 import com.liuguilin.lovewallpaper.fragment.RecommendFragment;
 import com.liuguilin.lovewallpaper.fragment.WallpaperFragment;
@@ -36,7 +35,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private RankingFragment rankingFragment;
     private WallpaperFragment wallpaperFragment;
     private RecommendFragment recommendFragment;
-    private NewsFragment newsFragment;
     private WeatherFragment weatherFragment;
     private AlbumFragment albumFragment;
 
@@ -93,11 +91,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 initWeather();
                 break;
             case R.id.nav_album:
-                //检测权限
                 inintAlbum();
-                break;
-            case R.id.nav_news:
-                initNews();
                 break;
             case R.id.nav_share:
                 drawer.closeDrawer(GravityCompat.START);
@@ -143,7 +137,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.action_settings) {
-            return true;
+            startActivity(new Intent(this,SettingActivity.class));
         }
         return super.onOptionsItemSelected(item);
     }
@@ -238,21 +232,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         transaction.commit();
     }
 
-    //新闻
-    private void initNews() {
-        getSupportActionBar().setTitle(getString(R.string.text_news));
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        if (newsFragment == null) {
-            newsFragment = new NewsFragment();
-            transaction.add(R.id.main_frame_layout, newsFragment);
-        }
-        //隐藏所有fragment
-        hideFragment(transaction);
-        //显示需要显示的fragment
-        transaction.show(newsFragment);
-        transaction.commit();
-    }
-
     //相册
     private void inintAlbum() {
         getSupportActionBar().setTitle(getString(R.string.text_album));
@@ -284,9 +263,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
         if (recommendFragment != null) {
             transaction.hide(recommendFragment);
-        }
-        if (newsFragment != null) {
-            transaction.hide(newsFragment);
         }
         if (weatherFragment != null) {
             transaction.hide(weatherFragment);

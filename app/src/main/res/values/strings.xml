@@ -13,4 +13,5 @@
     <string name="text_select_city">选择城市</string>
     <string name="text_about">关于</string>
     <string name="text_my_video">我的视频</string>
+    <string name="text_system_information">系统信息</string>
 </resources>

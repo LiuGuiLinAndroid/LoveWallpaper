@@ -8,15 +8,30 @@ package com.liuguilin.lovewallpaper.entity;
  *  描述：    常量类
  */
 
+import android.app.ActivityManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+import android.net.wifi.WifiInfo;
+import android.net.wifi.WifiManager;
+import android.os.Environment;
+import android.os.StatFs;
+import android.telephony.TelephonyManager;
+import android.text.format.Formatter;
 import android.view.Gravity;
 
 import com.liuguilin.lovewallpaper.R;
 import com.liuguilin.lovewallpaper.activity.WebViewActivity;
+import com.liuguilin.lovewallpaper.utils.L;
 import com.liuguilin.lovewallpaper.view.CustomDialog;
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 
 public class Constants {
 
@@ -100,5 +115,130 @@ public class Constants {
         intent2.putExtra("title", title);
         intent2.putExtra("url", url);
         mContext.startActivity(intent2);
+    }
+
+    //获取手机IP
+    public static String getPhoneIp(Context mContext) {
+        // 获取wifi服务
+        WifiManager wifiManager = (WifiManager) mContext.getSystemService(Context.WIFI_SERVICE);
+        // 判断wifi是否开启
+        if (!wifiManager.isWifiEnabled()) {
+            wifiManager.setWifiEnabled(true);
+        }
+        WifiInfo wifiInfo = wifiManager.getConnectionInfo();
+        int ipAddress = wifiInfo.getIpAddress();
+        String ip = intToIp(ipAddress);
+        return ip;
+    }
+
+    //地址算法
+    private static String intToIp(int i) {
+        return (i & 0xFF) + "." + ((i >> 8) & 0xFF) + "." + ((i >> 16) & 0xFF)
+                + "." + (i >> 24 & 0xFF);
+    }
+
+    //获取MAC地址
+    public static String getMacAddress(Context mContext) {
+        WifiManager wifi = (WifiManager) mContext.getSystemService(Context.WIFI_SERVICE);
+        WifiInfo info = wifi.getConnectionInfo();
+        return info.getMacAddress();
+    }
+
+    //获取内存卡可用内存
+    public static String getSdAvailableMemory() {
+        if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
+            File path = Environment.getExternalStorageDirectory();
+            StatFs statfs = new StatFs(path.getPath());
+            // 获取block的SIZE
+            long blocSize = statfs.getBlockSize();
+            // 获取BLOCK数量
+            long totalBlocks = statfs.getBlockCount();
+            // 空闲的Block的数量
+            long availaBlock = statfs.getAvailableBlocks();
+            // 计算总空间大小和空闲的空间大小
+            long availableSize = blocSize * availaBlock;
+            long allSize = blocSize * totalBlocks;
+            return "可用：" + availableSize / 1024 / 1024 / 1024 + "GB"
+                    + "  总共：" + allSize / 1024 / 1024 / 1024 + "GB";
+        } else {
+            return "SD卡不可用";
+        }
+    }
+
+    //获取当前网络状态
+    public static String getNetworkState(Context mContext) {
+        ConnectivityManager connectivityManager = (ConnectivityManager) mContext.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
+        if (networkInfo == null || !networkInfo.isConnected()) {
+            return "无网络连接";
+        } else {
+            return "网络正常";
+        }
+    }
+
+    //获得可用内存
+    public static String getAvailMemory(Context mContext) {
+        ActivityManager am = (ActivityManager) mContext.getSystemService(Context.ACTIVITY_SERVICE);
+        ActivityManager.MemoryInfo mi = new ActivityManager.MemoryInfo();
+        am.getMemoryInfo(mi);
+        // mi.availMem; 当前系统的可用内存
+        return Formatter.formatFileSize(mContext, mi.availMem);
+    }
+
+    //获取总内存
+    public static String getTotalMemory(Context mContext) {
+        // 系统内存信息文件
+        String str1 = "/proc/meminfo";
+        String str2;
+        String[] arrayOfString;
+        long initial_memory = 0;
+        try {
+            FileReader localFileReader = new FileReader(str1);
+            BufferedReader localBufferedReader = new BufferedReader(localFileReader, 8192);
+            // 读取meminfo第一行，系统总内存大小
+            str2 = localBufferedReader.readLine();
+            arrayOfString = str2.split("\\s+");
+            // 获得系统总内存，单位是KB，乘以1024转换为Byte
+            initial_memory = Integer.valueOf(arrayOfString[1]).intValue() * 1024;
+            localBufferedReader.close();
+
+        } catch (IOException e) {
+            L.e("error:" + e.toString());
+        }
+        // Byte转换为KB或者MB，内存大小规格化
+        return Formatter.formatFileSize(mContext, initial_memory);
+    }
+
+    // 1-cpu型号 2-cpu频率
+    public static String[] cpuInfo = {"", ""};
+
+    //获取CPU属性
+    public static void getCpuInfo() {
+        String str1 = "/proc/cpuinfo";
+        String str2 = "";
+        String[] arrayOfString;
+        try {
+            FileReader fr = new FileReader(str1);
+            BufferedReader localBufferedReader = new BufferedReader(fr, 8192);
+            str2 = localBufferedReader.readLine();
+            arrayOfString = str2.split("\\s+");
+            for (int i = 2; i < arrayOfString.length; i++) {
+                cpuInfo[0] = cpuInfo[0] + arrayOfString[i] + " ";
+            }
+            str2 = localBufferedReader.readLine();
+            arrayOfString = str2.split("\\s+");
+            cpuInfo[1] += arrayOfString[2];
+            localBufferedReader.close();
+        } catch (IOException e) {
+            L.i("error:" + e.toString());
+        }
+    }
+
+    //获取IMEI
+    public static String getImei(Context mContext) {
+        TelephonyManager mTelephonyMgr = (TelephonyManager) mContext.
+                getSystemService(Context.TELEPHONY_SERVICE);
+        String imei = mTelephonyMgr.getDeviceId();
+        return imei;
     }
 }
