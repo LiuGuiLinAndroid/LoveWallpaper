@@ -13,6 +13,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Gallery;
@@ -30,8 +31,10 @@ import com.kymjs.rxvolley.toolbox.FileUtils;
 import com.liuguilin.lovewallpaper.R;
 import com.liuguilin.lovewallpaper.adapter.GalleryAdapter;
 import com.liuguilin.lovewallpaper.utils.L;
+import com.liuguilin.lovewallpaper.view.CustomDialog;
 
 import java.io.IOException;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 
 public class GalleryActivity extends AppCompatActivity implements View.OnClickListener {
@@ -47,6 +50,10 @@ public class GalleryActivity extends AppCompatActivity implements View.OnClickLi
     private ImageView iv_preview_menu;
 
     private WallpaperManager wpManager;
+    private CustomDialog dialog_setwallpaper;
+    private Button btn_lock;
+    private Button btn_desktop;
+    private Button btn_all;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +64,15 @@ public class GalleryActivity extends AppCompatActivity implements View.OnClickLi
     }
 
     private void initView() {
+
+        dialog_setwallpaper = new CustomDialog(this, 0, 0,
+                R.layout.dialog_set_wallpaper, R.style.Theme_dialog, Gravity.BOTTOM, R.style.pop_anim_style);
+        btn_lock = (Button) dialog_setwallpaper.findViewById(R.id.btn_lock);
+        btn_lock.setOnClickListener(this);
+        btn_desktop = (Button) dialog_setwallpaper.findViewById(R.id.btn_desktop);
+        btn_desktop.setOnClickListener(this);
+        btn_all = (Button) dialog_setwallpaper.findViewById(R.id.btn_all);
+        btn_all.setOnClickListener(this);
 
         mGallery = (Gallery) findViewById(R.id.mGallery);
 
@@ -123,19 +139,82 @@ public class GalleryActivity extends AppCompatActivity implements View.OnClickLi
 
                 break;
             case R.id.btn_set_wallpaper:
-                Glide.with(this).load(mListBigUrl.get(mGallery.getSelectedItemPosition())).asBitmap().into(new SimpleTarget<Bitmap>() {
-                    @Override
-                    public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
-                        try {
-                            wpManager.setBitmap(resource);
-                            Toast.makeText(GalleryActivity.this, "设置壁纸成功", Toast.LENGTH_SHORT).show();
-                        } catch (IOException e) {
-                            Toast.makeText(GalleryActivity.this, "设置壁纸失败", Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                });
+                dialog_setwallpaper.show();
+                break;
+            case R.id.btn_lock:
+                setLockScreenWallpaper();
+                dialog_setwallpaper.dismiss();
+                break;
+            case R.id.btn_desktop:
+                setDesktopWallpaper();
+                dialog_setwallpaper.dismiss();
+                break;
+            case R.id.btn_all:
+                setAllWallpaper();
+                dialog_setwallpaper.dismiss();
                 break;
         }
+    }
+
+    //设置桌面壁纸
+    private void setDesktopWallpaper() {
+        Glide.with(this).load(mListBigUrl.get(mGallery.getSelectedItemPosition())).asBitmap().into(new SimpleTarget<Bitmap>() {
+            @Override
+            public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
+                try {
+                    wpManager.setBitmap(resource);
+                    Toast.makeText(GalleryActivity.this, "桌面壁纸设置成功", Toast.LENGTH_SHORT).show();
+                } catch (IOException e) {
+                    Toast.makeText(GalleryActivity.this, "桌面壁纸设置失败", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+    }
+
+    //设置锁屏壁纸
+    private void setLockScreenWallpaper() {
+        Glide.with(this).load(mListBigUrl.get(mGallery.getSelectedItemPosition())).asBitmap().into(new SimpleTarget<Bitmap>() {
+            @Override
+            public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
+                try {
+                    //获取类名
+                    Class class1 = wpManager.getClass();
+                    //获取设置锁屏壁纸的函数
+                    Method setWallPaperMethod = class1.getMethod("setBitmapToLockWallpaper", Bitmap.class);
+                    //调用锁屏壁纸的函数，并指定壁纸的路径imageFilesPath
+                    setWallPaperMethod.invoke(wpManager, resource);
+                    Toast.makeText(GalleryActivity.this, "锁屏壁纸设置成功", Toast.LENGTH_SHORT).show();
+                } catch (Throwable e) {
+                    Toast.makeText(GalleryActivity.this, "锁屏壁纸设置失败", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+    }
+
+    //设置所有壁纸
+    private void setAllWallpaper() {
+        Glide.with(this).load(mListBigUrl.get(mGallery.getSelectedItemPosition())).asBitmap().into(new SimpleTarget<Bitmap>() {
+            @Override
+            public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
+                try {
+                    //获取类名
+                    Class class1 = wpManager.getClass();
+                    //获取设置锁屏壁纸的函数
+                    Method setWallPaperMethod = class1.getMethod("setBitmapToLockWallpaper", Bitmap.class);
+                    //调用锁屏壁纸的函数，并指定壁纸的路径imageFilesPath
+                    setWallPaperMethod.invoke(wpManager, resource);
+                    Toast.makeText(GalleryActivity.this, "锁屏壁纸设置成功", Toast.LENGTH_SHORT).show();
+                } catch (Throwable e) {
+                    Toast.makeText(GalleryActivity.this, "锁屏壁纸设置失败", Toast.LENGTH_SHORT).show();
+                }
+                try {
+                    wpManager.setBitmap(resource);
+                    Toast.makeText(GalleryActivity.this, "桌面壁纸设置成功", Toast.LENGTH_SHORT).show();
+                } catch (IOException e) {
+                    Toast.makeText(GalleryActivity.this, "桌面壁纸设置失败", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
     }
 }
 

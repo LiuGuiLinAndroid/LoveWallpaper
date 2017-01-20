@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="bottom"
+    android:orientation="vertical"
+    android:padding="10dp">
+
+    <!--共性方法多 可以抽调成Style-->
+    <Button
+        android:id="@+id/btn_lock"
+        style="@style/dialog_button_style"
+        android:text="锁屏壁纸"/>
+
+    <Button
+        android:id="@+id/btn_desktop"
+        style="@style/dialog_button_style"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="10dp"
+        android:text="桌面壁纸"/>
+
+    <Button
+        android:id="@+id/btn_all"
+        style="@style/dialog_button_style"
+        android:text="全部设置"/>
+
+</LinearLayout>
