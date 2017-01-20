@@ -12,7 +12,9 @@
         android:background="@color/colorShareBg"
         android:orientation="horizontal">
 
+        <!--QQ-->
         <LinearLayout
+            android:id="@+id/ll_share_qq"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -34,7 +36,9 @@
 
         </LinearLayout>
 
+        <!--Sina-->
         <LinearLayout
+            android:id="@+id/ll_share_sina"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -56,8 +60,9 @@
 
         </LinearLayout>
 
-
+        <!--Wechat-->
         <LinearLayout
+            android:id="@+id/ll_share_wechat"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -79,7 +84,9 @@
 
         </LinearLayout>
 
+        <!--More-->
         <LinearLayout
+            android:id="@+id/ll_share_more"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"

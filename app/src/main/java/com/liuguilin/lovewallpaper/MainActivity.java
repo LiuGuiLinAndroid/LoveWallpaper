@@ -15,8 +15,11 @@ import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.LinearLayout;
 
 import com.liuguilin.lovewallpaper.activity.SettingActivity;
+import com.liuguilin.lovewallpaper.entity.Constants;
 import com.liuguilin.lovewallpaper.fragment.AlbumFragment;
 import com.liuguilin.lovewallpaper.fragment.CategoryFragment;
 import com.liuguilin.lovewallpaper.fragment.HomePageFragment;
@@ -26,7 +29,7 @@ import com.liuguilin.lovewallpaper.fragment.WallpaperFragment;
 import com.liuguilin.lovewallpaper.fragment.WeatherFragment;
 import com.liuguilin.lovewallpaper.view.CustomDialog;
 
-public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener {
 
     private DrawerLayout drawer;
 
@@ -39,6 +42,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private AlbumFragment albumFragment;
 
     private CustomDialog dialogShare;
+    private LinearLayout ll_share_qq;
+    private LinearLayout ll_share_sina;
+    private LinearLayout ll_share_wechat;
+    private LinearLayout ll_share_more;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +59,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private void initView() {
 
         dialogShare = new CustomDialog(this, 0, 0, R.layout.dialog_share_item, R.style.Theme_dialog, Gravity.BOTTOM, R.style.pop_anim_style);
+        ll_share_qq = (LinearLayout) dialogShare.findViewById(R.id.ll_share_qq);
+        ll_share_qq.setOnClickListener(this);
+        ll_share_sina = (LinearLayout) dialogShare.findViewById(R.id.ll_share_sina);
+        ll_share_sina.setOnClickListener(this);
+        ll_share_wechat = (LinearLayout) dialogShare.findViewById(R.id.ll_share_wechat);
+        ll_share_wechat.setOnClickListener(this);
+        ll_share_more = (LinearLayout) dialogShare.findViewById(R.id.ll_share_more);
+        ll_share_more.setOnClickListener(this);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -137,7 +152,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.action_settings) {
-            startActivity(new Intent(this,SettingActivity.class));
+            startActivity(new Intent(this, SettingActivity.class));
         }
         return super.onOptionsItemSelected(item);
     }
@@ -270,5 +285,25 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         if (albumFragment != null) {
             transaction.hide(albumFragment);
         }
+    }
+
+    //点击事件
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.ll_share_qq:
+
+                break;
+            case R.id.ll_share_sina:
+
+                break;
+            case R.id.ll_share_wechat:
+
+                break;
+            case R.id.ll_share_more:
+                Constants.intentSystemShare(this, "我在Github上找到一款非常棒的软件:" + Constants.LOVE_WALLPAPER_GITHUB);
+                break;
+        }
+        dialogShare.dismiss();
     }
 }

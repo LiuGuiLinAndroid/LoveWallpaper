@@ -83,9 +83,6 @@ public class Constants {
                     , R.drawable.w25, R.drawable.w26, R.drawable.w27, R.drawable.w28, R.drawable.w29
                     , R.drawable.w30, R.drawable.w31, R.drawable.w32, R.drawable.w33, R.drawable.w34
                     , R.drawable.w35, R.drawable.w36, R.drawable.w37, R.drawable.w38, R.drawable.w99};
-    //新闻类别
-    public static final String NEWS_TYPE_EN[] = {"top", "shehui", "guonei", "guoji", "yule", "tiyu", "junshi", "keji", "caijing", "shishang"};
-    public static final String NEWS_TYPE_ZH[] = {"头条", "社会", "国内", "国际", "娱乐", "体育", "军事", "科技", "财经", "时尚"};
 
     //封装dialog
     public static CustomDialog showDialog(Context mContext, int layout) {
@@ -240,5 +237,13 @@ public class Constants {
                 getSystemService(Context.TELEPHONY_SERVICE);
         String imei = mTelephonyMgr.getDeviceId();
         return imei;
+    }
+
+    //系统分享
+    public static void intentSystemShare(Context mContext, String text) {
+        Intent intent = new Intent(Intent.ACTION_SEND);
+        intent.setType("text/plain");
+        intent.putExtra(Intent.EXTRA_TEXT, text);
+        mContext.startActivity(intent);
     }
 }
