@@ -291,17 +291,18 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
+            //分享目前就用原生的 后期加入第三方分享
             case R.id.ll_share_qq:
-
+                Constants.intentStartQQ(this, Constants.shareText);
                 break;
             case R.id.ll_share_sina:
-
+                Constants.intentStartSina(this, Constants.shareText);
                 break;
             case R.id.ll_share_wechat:
-
+                Constants.intentStartWechat(this,Constants.shareText);
                 break;
             case R.id.ll_share_more:
-                Constants.intentSystemShare(this, "我在Github上找到一款非常棒的软件:" + Constants.LOVE_WALLPAPER_GITHUB);
+                Constants.intentSystemShare(this, Constants.shareText);
                 break;
         }
         dialogShare.dismiss();

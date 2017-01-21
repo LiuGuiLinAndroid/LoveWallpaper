@@ -9,16 +9,21 @@ package com.liuguilin.lovewallpaper.entity;
  */
 
 import android.app.ActivityManager;
+import android.content.ComponentName;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.net.Uri;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.os.Environment;
 import android.os.StatFs;
+import android.support.v7.app.AlertDialog;
 import android.telephony.TelephonyManager;
 import android.text.format.Formatter;
 import android.view.Gravity;
@@ -32,6 +37,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.List;
 
 public class Constants {
 
@@ -55,6 +61,13 @@ public class Constants {
     //图片地址
     public static final String IMOOC_IMAGE_URL = "http://szimg.mukewang.com/5876eedd0001d20909000500.jpg";
 
+    //QQ下载地址
+    public static final String URL_DOWNLOAD_QQ = "http://app.sina.cn/appdetail.php?appID=100928";
+    //微博下载地址
+    public static final String URL_DOWNLOAD_SINA = "http://app.sina.cn/appdetail.php?appID=84560";
+    //微信下载地址
+    public static final String URL_DOWNLOAD_WECHAT = "http://app.sina.cn/appdetail.php?appID=93134";
+
     //Blog
     public static final String BLOG = "http://blog.csdn.net/qq_26787115";
     //Github
@@ -64,6 +77,8 @@ public class Constants {
 
     //心知天气key
     public static final String THINKPAPE_KEY = "cjfbaiq6lln0oqk1";
+
+    public static String shareText = "我在Github上找到一款非常棒的软件:" + Constants.LOVE_WALLPAPER_GITHUB;
 
     //生活指数图片
     public static final int WEATHER_LIFE_ICON[] = {R.drawable.icon_car_washing, R.drawable.icon_dressing
@@ -245,5 +260,99 @@ public class Constants {
         intent.setType("text/plain");
         intent.putExtra(Intent.EXTRA_TEXT, text);
         mContext.startActivity(intent);
+    }
+
+    //跳转QQ 可指定好友
+    public static void intentStartQQ(final Context mContext, String text) {
+        if (isInstall(mContext, "com.tencent.mobileqq")) {
+            String url = "mqqwpa://im/chat?chat_type=wpa&uin=100000&version=1";
+            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+            intent.setType("text/plain");
+            intent.putExtra(Intent.EXTRA_TEXT, text);
+            mContext.startActivity(intent);
+        } else {
+            showNoInstallDialog(mContext, mContext.getString(R.string.is_install_qq), URL_DOWNLOAD_QQ);
+        }
+    }
+
+    //跳转微博 可分享图片等
+    public static void intentStartSina(final Context mContext, String text) {
+        Intent intent = new Intent(Intent.ACTION_SEND);
+        intent.setType("text/plain");
+        PackageManager pm = mContext.getPackageManager();
+        List<ResolveInfo> matches = pm.queryIntentActivities(intent, PackageManager.MATCH_DEFAULT_ONLY);
+        String packageName = "com.sina.weibo";
+        ResolveInfo info = null;
+        for (ResolveInfo each : matches) {
+            String pkgName = each.activityInfo.applicationInfo.packageName;
+            if (packageName.equals(pkgName)) {
+                info = each;
+                break;
+            }
+        }
+        if (info == null) {
+            showNoInstallDialog(mContext, mContext.getString(R.string.is_install_sina), URL_DOWNLOAD_SINA);
+        } else {
+            intent.setClassName(packageName, info.activityInfo.name);
+            intent.putExtra(Intent.EXTRA_TEXT, text);
+            mContext.startActivity(intent);
+        }
+    }
+
+    //跳转到微信
+    public static void intentStartWechat(Context mContext,String text) {
+        if (isInstall(mContext, "com.tencent.mm")) {
+            Intent intent = new Intent();
+            intent.setType("text/plain");
+            intent.putExtra(Intent.EXTRA_TEXT, text);
+            intent.setComponent(new ComponentName("com.tencent.mm", "com.tencent.mm.ui.LauncherUI"));
+            intent.setAction(Intent.ACTION_VIEW);
+            mContext.startActivity(intent);
+        } else {
+            showNoInstallDialog(mContext, mContext.getString(R.string.is_install_wechat), URL_DOWNLOAD_WECHAT);
+        }
+    }
+
+    //判断程序是否安装
+    public static boolean isInstall(Context mContext, String packageName) {
+        Intent intent = new Intent(Intent.ACTION_SEND);
+        PackageManager pm = mContext.getPackageManager();
+        List<ResolveInfo> matches = pm.queryIntentActivities(intent, PackageManager.MATCH_DEFAULT_ONLY);
+        ResolveInfo info = null;
+        for (ResolveInfo each : matches) {
+            String pkgName = each.activityInfo.applicationInfo.packageName;
+            if (packageName.equals(pkgName)) {
+                info = each;
+                break;
+            }
+        }
+        if (info == null) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    //提示未安装
+    public static void showNoInstallDialog(final Context mContext, String message, final String url) {
+        new AlertDialog.Builder(mContext)
+                .setMessage(message)
+                .setPositiveButton("确定",
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                Uri uri = Uri.parse(url);
+                                Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                                mContext.startActivity(intent);
+                                dialog.dismiss();
+                            }
+                        })
+                .setNegativeButton("取消",
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        }).show();
     }
 }
