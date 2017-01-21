@@ -61,6 +61,10 @@
             android:name=".activity.SystemInformationActivity"
             android:label="@string/text_system_information"/>
 
+        <activity
+            android:name=".activity.PuzzleGameActivity"
+            android:label="游戏"/>
+
     </application>
 
 </manifest>

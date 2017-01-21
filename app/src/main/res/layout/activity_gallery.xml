@@ -39,8 +39,9 @@
         android:src="@drawable/preview_back"/>
 
     <LinearLayout
+        android:id="@+id/ll_bottom_bar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
         android:layout_alignParentBottom="true"
         android:alpha="0.5"
         android:background="@color/cardview_dark_background"

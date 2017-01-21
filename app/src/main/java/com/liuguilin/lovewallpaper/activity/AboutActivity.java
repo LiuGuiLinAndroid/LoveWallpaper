@@ -8,7 +8,6 @@ package com.liuguilin.lovewallpaper.activity;
  *  描述：    关于
  */
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -42,7 +41,7 @@ public class AboutActivity extends BaseActivity implements View.OnClickListener,
         mList.add("作者:刘某人");
         mList.add("Github");
         mList.add("CSDN Blog");
-        mList.add("Android Video");
+        mList.add("QQ群:555974449");
 
         profile_image = (CircleImageView) findViewById(R.id.profile_image);
         profile_image.setOnClickListener(this);
@@ -65,7 +64,7 @@ public class AboutActivity extends BaseActivity implements View.OnClickListener,
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
         switch (i) {
             case 0:
-
+                //不需要
                 break;
             case 1:
                 Constants.startWebView(this, "Github", Constants.GITHUB);
@@ -74,7 +73,7 @@ public class AboutActivity extends BaseActivity implements View.OnClickListener,
                 Constants.startWebView(this, "CSDN Blog", Constants.BLOG);
                 break;
             case 3:
-                startActivity(new Intent(this, AndroidVideoActivity.class));
+                Constants.joinQQGroup(this, "WKsVihQjloOtstvRIXUWxU2M4QRKUwO0");
                 break;
         }
     }

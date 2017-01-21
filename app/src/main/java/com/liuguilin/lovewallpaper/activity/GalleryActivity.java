@@ -11,13 +11,18 @@ package com.liuguilin.lovewallpaper.activity;
 import android.app.WallpaperManager;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Gallery;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
@@ -30,7 +35,9 @@ import com.kymjs.rxvolley.http.VolleyError;
 import com.kymjs.rxvolley.toolbox.FileUtils;
 import com.liuguilin.lovewallpaper.R;
 import com.liuguilin.lovewallpaper.adapter.GalleryAdapter;
+import com.liuguilin.lovewallpaper.entity.Constants;
 import com.liuguilin.lovewallpaper.utils.L;
+import com.liuguilin.lovewallpaper.utils.ScreenUtils;
 import com.liuguilin.lovewallpaper.view.CustomDialog;
 
 import java.io.IOException;
@@ -54,6 +61,10 @@ public class GalleryActivity extends AppCompatActivity implements View.OnClickLi
     private Button btn_lock;
     private Button btn_desktop;
     private Button btn_all;
+
+    private LinearLayout ll_bottom_bar;
+    private PopupWindow popWnd;
+    private View contentView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,6 +99,7 @@ public class GalleryActivity extends AppCompatActivity implements View.OnClickLi
         iv_preview_down.setOnClickListener(this);
         iv_preview_menu = (ImageView) findViewById(R.id.iv_preview_menu);
         iv_preview_menu.setOnClickListener(this);
+        ll_bottom_bar = (LinearLayout) findViewById(R.id.ll_bottom_bar);
 
         Intent intent = getIntent();
         position = intent.getIntExtra("position", 0);
@@ -109,10 +121,10 @@ public class GalleryActivity extends AppCompatActivity implements View.OnClickLi
                 finish();
                 break;
             case R.id.iv_preview_share:
-
+                Constants.intentSystemShare(this, Constants.shareText);
                 break;
             case R.id.iv_preview_fav:
-
+                Toast.makeText(this, "喜欢", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.iv_preview_down:
                 RxVolley.download(FileUtils.getSDCardPath() + "/LoveWallpaper/" + System.currentTimeMillis() + ".png"
@@ -136,7 +148,7 @@ public class GalleryActivity extends AppCompatActivity implements View.OnClickLi
                         });
                 break;
             case R.id.iv_preview_menu:
-
+                showMenuWindow();
                 break;
             case R.id.btn_set_wallpaper:
                 dialog_setwallpaper.show();
@@ -154,6 +166,21 @@ public class GalleryActivity extends AppCompatActivity implements View.OnClickLi
                 dialog_setwallpaper.dismiss();
                 break;
         }
+    }
+
+    //显示菜单window
+    private void showMenuWindow() {
+        contentView = LayoutInflater.from(this).inflate(R.layout.pop_item_layout, null);
+        popWnd = new PopupWindow(this);
+        popWnd.setContentView(contentView);
+        popWnd.setWidth(ViewGroup.LayoutParams.WRAP_CONTENT);
+        popWnd.setHeight(ViewGroup.LayoutParams.WRAP_CONTENT);
+        popWnd.setOutsideTouchable(true);
+        popWnd.setBackgroundDrawable(new BitmapDrawable());
+        popWnd.showAtLocation(ll_bottom_bar, Gravity.BOTTOM
+                , ScreenUtils.getInstance(this).getScreenWidth() / 2
+                , 350);
+        //这里的350 应该按照View的思路 去进行测量，这里暂时未处理
     }
 
     //设置桌面壁纸
@@ -215,6 +242,14 @@ public class GalleryActivity extends AppCompatActivity implements View.OnClickLi
                 }
             }
         });
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (contentView.getParent() != null) {
+            popWnd.dismiss();
+        }
     }
 }
 
