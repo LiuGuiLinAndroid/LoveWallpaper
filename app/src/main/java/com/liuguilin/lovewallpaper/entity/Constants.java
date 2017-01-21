@@ -37,6 +37,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.List;
 
 public class Constants {
@@ -87,6 +88,8 @@ public class Constants {
     //设置图标
     public static final int SETTING_ICON[] = {R.drawable.icon_setting_msg, R.drawable.icon_clear
             , R.drawable.icon_version, R.drawable.icon_git, R.drawable.icon_about};
+
+    //城市字母
 
     //天气图标
     public static final int WEATHER_ICON[] =
@@ -300,7 +303,7 @@ public class Constants {
     }
 
     //跳转到微信
-    public static void intentStartWechat(Context mContext,String text) {
+    public static void intentStartWechat(Context mContext, String text) {
         if (isInstall(mContext, "com.tencent.mm")) {
             Intent intent = new Intent();
             intent.setType("text/plain");
@@ -354,5 +357,20 @@ public class Constants {
                                 dialog.dismiss();
                             }
                         }).show();
+    }
+
+    //读取assets文件
+    public static String getFromAssets(Context mContext, String fileName) {
+        try {
+            InputStreamReader inputReader = new InputStreamReader(mContext.getResources().getAssets().open(fileName));
+            BufferedReader bufReader = new BufferedReader(inputReader);
+            String line = "";
+            String Result = "";
+            while ((line = bufReader.readLine()) != null)
+                Result += line;
+            return Result;
+        } catch (Exception e) {
+            return "";
+        }
     }
 }

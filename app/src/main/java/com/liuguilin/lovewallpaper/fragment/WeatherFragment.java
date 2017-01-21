@@ -11,6 +11,7 @@ package com.liuguilin.lovewallpaper.fragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,6 +28,8 @@ import com.liuguilin.lovewallpaper.model.WeatherApiModel;
 import com.liuguilin.lovewallpaper.model.WeatherEveryDayApiModel;
 import com.liuguilin.lovewallpaper.model.WeatherGridModel;
 import com.liuguilin.lovewallpaper.model.WeatherLifeApiModel;
+import com.liuguilin.lovewallpaper.utils.L;
+import com.liuguilin.lovewallpaper.utils.SharePreUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,7 +48,7 @@ public class WeatherFragment extends Fragment implements View.OnClickListener {
     private TextView tv_city;
     private TextView tv_date;
     private GridView mGridViewEveryDay;
-    private String weatherCity = "深圳";
+    private String weatherCity;
 
     private List<WeatherGridModel> mList = new ArrayList<>();
     private WeatherGradAdapter adapter;
@@ -58,6 +61,8 @@ public class WeatherFragment extends Fragment implements View.OnClickListener {
     }
 
     private void initView(View view) {
+
+        weatherCity = SharePreUtils.getString(getActivity(), "city", "深圳");
 
         mGridViewEveryDay = (GridView) view.findViewById(R.id.mGridViewEveryDay);
         adapter = new WeatherGradAdapter(getActivity(), mList);
@@ -187,7 +192,16 @@ public class WeatherFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == Constants.REQUEST_CODE) {
-            //String result = data.getStringExtra("city_name");
+            try {
+                String result = data.getStringExtra("city_name");
+                if (!TextUtils.isEmpty(result)) {
+                    mList.clear();
+                    tv_city.setText(result);
+                    getBaseWeather(result);
+                }
+            } catch (NullPointerException e) {
+                L.i("back key");
+            }
         }
         super.onActivityResult(requestCode, resultCode, data);
     }
@@ -210,4 +224,9 @@ public class WeatherFragment extends Fragment implements View.OnClickListener {
         adapter.notifyDataSetChanged();
     }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        SharePreUtils.putString(getActivity(), "city", tv_city.getText().toString());
+    }
 }
