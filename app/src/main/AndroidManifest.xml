@@ -63,7 +63,10 @@
 
         <activity
             android:name=".activity.PuzzleGameActivity"
-            android:label="游戏"/>
+            android:label="@string/text_game"/>
+
+        <activity android:name=".activity.PhoneListActivity"
+            android:label="@string/text_phone"/>
 
     </application>
 

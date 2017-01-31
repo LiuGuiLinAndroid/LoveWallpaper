@@ -20,6 +20,7 @@ import android.widget.TextView;
 import com.liuguilin.lovewallpaper.R;
 import com.liuguilin.lovewallpaper.entity.Constants;
 import com.liuguilin.lovewallpaper.model.WeatherGridModel;
+import com.liuguilin.lovewallpaper.utils.L;
 
 import java.util.List;
 

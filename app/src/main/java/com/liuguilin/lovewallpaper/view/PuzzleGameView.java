@@ -220,7 +220,7 @@ public class PuzzleGameView extends RelativeLayout implements View.OnClickListen
     private void initBitmap() {
         //判断是否存在这张图片
         if (mBitmap == null) {
-            mBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.icon_album);
+            mBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.splash_bg);
         }
         //进行裁剪
         mItemBitmaps = ImageSplitterUtil.splitImage(mBitmap, mColumn);

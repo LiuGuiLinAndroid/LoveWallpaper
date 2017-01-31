@@ -85,7 +85,6 @@ public class WeatherFragment extends Fragment implements View.OnClickListener {
 
     private void getBaseWeather(String city) {
         getWeather(city);
-        getWeatherEveryDay(city);
         getWeatherLife(city);
     }
 
@@ -128,12 +127,13 @@ public class WeatherFragment extends Fragment implements View.OnClickListener {
     }
 
     //获取生活指数
-    private void getWeatherLife(String city) {
+    private void getWeatherLife(final String city) {
         Call<WeatherLifeApiModel> call = apiImp.getWeatherLifeApi(Constants.THINKPAPE_KEY, city);
         call.enqueue(new Callback<WeatherLifeApiModel>() {
             @Override
             public void onResponse(Call<WeatherLifeApiModel> call, Response<WeatherLifeApiModel> response) {
                 if (response.isSuccessful()) {
+                    getWeatherEveryDay(city);
                     parsingLift(response.body().getResults().get(0).getSuggestion());
                 }
             }
@@ -169,13 +169,12 @@ public class WeatherFragment extends Fragment implements View.OnClickListener {
             String wind_direction_degree = results.get(0).getDaily().get(i).getWind_direction_degree();
             String wind_speed = results.get(0).getDaily().get(i).getWind_speed();
             String wind_scale = results.get(0).getDaily().get(i).getWind_scale();
-            int code = Integer.parseInt(results.get(0).getDaily().get(i).getCode_day());
 
             addListText(data + "\n" + "白天天气:" + text_day + "\n"
                     + "夜间天气:" + text_night + "\n" + "最高温度:" + high + "\n"
                     + "最低温度:" + low + "\n" + "风向:" + wind_direction + "\n"
                     + "风向角度:" + wind_direction_degree + "\n" + "风速:" + wind_speed + "\n"
-                    + "风力:" + wind_scale, code);
+                    + "风力:" + wind_scale, Integer.parseInt(results.get(0).getDaily().get(i).getCode_day()));
         }
     }
 
@@ -211,6 +210,7 @@ public class WeatherFragment extends Fragment implements View.OnClickListener {
         WeatherGridModel models = new WeatherGridModel();
         models.setType(WeatherGradAdapter.VALUE_TEXT);
         models.setText(text);
+        models.setCode(code);
         mList.add(models);
         adapter.notifyDataSetChanged();
     }

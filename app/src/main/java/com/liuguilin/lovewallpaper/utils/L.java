@@ -22,6 +22,12 @@ public class L {
         }
     }
 
+    public static void i(String TAG,String text) {
+        if (DEBUG) {
+            Log.i(TAG, text);
+        }
+    }
+
     public static void d(String text) {
         if (DEBUG) {
             Log.d(TAG, text);
@@ -45,4 +51,5 @@ public class L {
             Log.e(TAG, text);
         }
     }
+
 }

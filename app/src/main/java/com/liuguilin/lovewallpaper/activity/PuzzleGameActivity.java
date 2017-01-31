@@ -5,7 +5,7 @@ package com.liuguilin.lovewallpaper.activity;
  *  文件名:   PuzzleGameActivity
  *  创建者:   LGL
  *  创建时间:  2017/1/21 11:55
- *  描述：    TODO
+ *  描述：    拼图游戏
  */
 
 import android.os.Bundle;

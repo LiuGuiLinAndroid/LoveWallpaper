@@ -2,13 +2,11 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center"
     android:orientation="vertical">
 
-    <com.liuguilin.lovewallpaper.view.PuzzleGameView
-        android:id="@+id/mGameView"
+    <ListView
+        android:id="@+id/mListView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:padding="10dp" />
+        android:layout_height="match_parent"/>
 
 </LinearLayout>

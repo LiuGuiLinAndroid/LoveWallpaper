@@ -23,6 +23,7 @@ import android.widget.Gallery;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
@@ -66,12 +67,18 @@ public class GalleryActivity extends AppCompatActivity implements View.OnClickLi
     private PopupWindow popWnd;
     private View contentView;
 
+    //游戏
+    private TextView tv_game;
+    //外壳
+    private TextView tv_shell;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_gallery);
 
         initView();
+        initMenuWindow();
     }
 
     private void initView() {
@@ -148,7 +155,10 @@ public class GalleryActivity extends AppCompatActivity implements View.OnClickLi
                         });
                 break;
             case R.id.iv_preview_menu:
-                showMenuWindow();
+                popWnd.showAtLocation(ll_bottom_bar, Gravity.BOTTOM
+                        , ScreenUtils.getInstance(this).getScreenWidth() / 2
+                        , 350);
+                //这里的350 应该按照View的思路 去进行测量，这里暂时未处理
                 break;
             case R.id.btn_set_wallpaper:
                 dialog_setwallpaper.show();
@@ -165,22 +175,28 @@ public class GalleryActivity extends AppCompatActivity implements View.OnClickLi
                 setAllWallpaper();
                 dialog_setwallpaper.dismiss();
                 break;
+            case R.id.tv_game:
+                startActivity(new Intent(this,PuzzleGameActivity.class));
+                break;
+            case R.id.tv_shell:
+                startActivity(new Intent(this,PhoneListActivity.class));
+                break;
         }
     }
 
     //显示菜单window
-    private void showMenuWindow() {
+    private void initMenuWindow() {
         contentView = LayoutInflater.from(this).inflate(R.layout.pop_item_layout, null);
+        tv_game = (TextView) contentView.findViewById(R.id.tv_game);
+        tv_game.setOnClickListener(this);
+        tv_shell = (TextView) contentView.findViewById(R.id.tv_shell);
+        tv_shell.setOnClickListener(this);
         popWnd = new PopupWindow(this);
         popWnd.setContentView(contentView);
         popWnd.setWidth(ViewGroup.LayoutParams.WRAP_CONTENT);
         popWnd.setHeight(ViewGroup.LayoutParams.WRAP_CONTENT);
         popWnd.setOutsideTouchable(true);
         popWnd.setBackgroundDrawable(new BitmapDrawable());
-        popWnd.showAtLocation(ll_bottom_bar, Gravity.BOTTOM
-                , ScreenUtils.getInstance(this).getScreenWidth() / 2
-                , 350);
-        //这里的350 应该按照View的思路 去进行测量，这里暂时未处理
     }
 
     //设置桌面壁纸

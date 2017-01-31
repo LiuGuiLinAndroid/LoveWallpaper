@@ -65,8 +65,8 @@ public class HomePageFragment extends Fragment {
             switch (msg.what) {
                 case Constants.HANDLER_AUTO_SHUFFLING:
                     int index = mViewPager.getCurrentItem();
-                    if (index >= mListTitle.size()) {
-                        mViewPager.setCurrentItem(1);
+                    if (index >= mView.size()-1) {
+                        mViewPager.setCurrentItem(0);
                     }else {
                         mViewPager.setCurrentItem(index + 1);
                     }
@@ -165,7 +165,7 @@ public class HomePageFragment extends Fragment {
             mView.add(view);
         }
         mViewPager.setAdapter(new BannerAdapter());
-        mViewPager.setCurrentItem(mListTitle.size() * 100);
+        //mViewPager.setCurrentItem(mListTitle.size() * 100);
         mHandler.sendEmptyMessageDelayed(Constants.HANDLER_AUTO_SHUFFLING, 3000);
         //滚动到顶部
         mHandler.post(new Runnable() {

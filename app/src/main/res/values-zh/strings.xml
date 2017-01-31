@@ -19,6 +19,8 @@
     <string name="is_install_qq">您还没有安装腾讯QQ，是否前往浏览器下载？</string>
     <string name="is_install_sina">您还没有安装新浪微博，是否前往浏览器下载？</string>
     <string name="is_install_wechat">您还没有安装微信，是否前往浏览器下载？</string>
+    <string name="text_game">游戏</string>
+    <string name="text_phone">手机</string>
 
 
 </resources>
